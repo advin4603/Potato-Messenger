@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'messenger/index.css' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potato Messenger</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'messenger:chatpage' %}">Chats</a></li>
+                <li><a href="{% url 'messenger:account' %}">Account</a></li>
+                <li><a href="{% url 'messenger:logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'messenger:login' %}">Login</a></li>
+                <li><a href="{% url 'messenger:signup' %}">Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <h1>
+        Potato Messenger
+    </h1>
+    
+</body>
+</html>

@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "potato-messenger"
+version = "0.1.0"
+description = "A Chat Application"
+authors = ["advin4603 <github.com/advin4603>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Django = "^3.1.7"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

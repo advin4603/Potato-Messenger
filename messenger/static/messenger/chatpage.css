@@ -1,0 +1,174 @@
+
+main{
+    background-color:rgb(32, 32, 32);
+    margin: auto;
+    padding: 0;
+    width: 100%;
+    height: 85vh;
+}
+.leftWrapper, .rightWrapper{
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    padding-top: 25px;
+    height: 85vh;
+    
+}
+.leftWrapper{
+    left: 0;   
+    width: 25%;
+    overflow-y: scroll;
+}
+.rightWrapper{
+    width: 75%;
+    right: 0;
+    background-color: rgb(255, 210, 173);
+}
+.left{
+    padding: 10px 2px;
+    color:rgb(255, 210, 173);
+    
+}
+.left h1{
+    width: 95%;
+    margin: auto;
+    text-align: center;
+    border: solid;
+    margin-bottom: 30px;
+}
+.newChat{
+    width: 85%;
+    margin: auto;
+    text-align: center;
+    border: solid;
+    margin-bottom: 10px;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.search{
+    width: 85%;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.search input{
+    background-color: rgb(32, 32, 32);
+    color: rgb(255, 210, 173);
+    border: solid;
+    width: 100%;
+    margin-right: 5px;
+    padding: 0 10px;
+    transition: all 0.2s;
+}
+.search input:focus, .searchButton:hover, .newChat:hover, #messageInput:focus, .messageSend:hover{
+    background-color: rgb(255, 210, 173);
+    color: rgb(32, 32, 32);
+    border-radius: 0;
+    outline:rgb(255, 210, 173) solid 2px;
+}
+.searchButton{
+    padding: 0 10px;
+    border: solid;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.chat{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    border: solid;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.chat:hover{
+    background-color: rgb(255, 210, 173);
+    color: rgb(32, 32, 32);
+}
+.chatfocus{
+    border-style: dashed;
+    background-color: rgb(255, 210, 173);
+    color: rgb(32, 32, 32);
+    cursor: default;
+}
+::-webkit-scrollbar {
+    width: 11px;
+    height: 18px;
+}
+::-webkit-scrollbar-thumb {
+    height: 6px;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    background-color: rgb(32, 32, 32);
+    
+
+}
+.leftWrapper::-webkit-scrollbar-thumb{
+    background-color: rgb(255, 210, 173);
+}
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+}
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+.chatFooterWrapper{
+    position: fixed;
+    bottom: 0;
+    left: 25%;
+    width: 75%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+.chatFooter{
+    margin: auto;
+    width: 85%;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: rgb(32, 32, 32);
+    height: 100%;
+    align-items: center;
+    padding: 0 50px;
+}
+.chatBrowserWrapper{
+    color: rgb(32, 32, 32);
+    border:solid;
+    margin: auto;
+    width: 95%;
+    margin-bottom: 70px;
+    padding: 10px 20px;
+}
+#messageInput{
+    width: 70%;
+    background-color: rgb(32, 32, 32);
+    color: rgb(255, 210, 173);
+    border: solid;
+    padding: 0 10px;
+    transition: all 0.2s;
+    height: 50%;
+}
+.messageSend{
+    color: rgb(255, 210, 173);
+    width: 20%;
+    text-align: center;
+    border: solid;
+    padding: 0 10px;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    cursor: pointer;
+    
+}

@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'messenger/base.css' %}">
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+    {% block head %}
+    {% endblock head %}
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="{% url 'messenger:index' %}">
+                    <h4>
+                        Potato Messenger
+                    </h4>
+                </a>
+                
+            </div>
+            <div class="links">
+                <ul>
+                    {% block links %}
+                    {% endblock links %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% block main %}
+        {% endblock main %}
+    </main>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+</body>
+</html>

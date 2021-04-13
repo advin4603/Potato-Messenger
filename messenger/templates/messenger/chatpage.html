@@ -1,0 +1,50 @@
+{% extends 'messenger/base.html' %}
+{% load static %}
+
+{% block title %}
+    Chats
+{% endblock title %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'messenger/chatpage.css' %}">
+{% endblock head %}
+
+{% block links %}
+    <li><a href="{% url 'messenger:account' %}">Account</a></li>
+    <li><a href="{% url 'messenger:logout' %}">Logout</a></li>
+{% endblock links %}
+
+{% block main %}
+    <div class="leftWrapper">
+        <div class="left">
+            <h1>Chats</h1>
+            <div class="newChat">Add New Chat</div>
+            <div class="search">
+                <input type="text" id="searchChat">
+                <div class="searchButton">Search</div>
+            </div>
+            {% for chatname in chats %}
+                <div class="chat">{{ chatname }}</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="rightWrapper">
+        <div class="right">
+            <div class="chatBrowserWrapper">
+                <div class="chatBrowser">
+                    a
+                    <!-- {% for chatname in chats %}
+                        {{ chatname }}<br>
+                    {% endfor %} -->
+                </div>
+            </div>
+            <div class="chatFooterWrapper">
+                <div class="chatFooter">
+                    <input type="text" id="messageInput">
+                    <div class="messageSend">Send</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}

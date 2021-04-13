@@ -1,0 +1,49 @@
+{% extends 'messenger/base.html' %}
+{% load static %}
+
+{% block title %}
+    Account
+{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'messenger/account.css' %}">
+<script src="{% static 'messenger/editButton.js' %}"></script>
+{% endblock head %}
+
+{% block links %}
+    <li><a href="{% url 'messenger:chatpage' %}">Chats</a></li>
+    <li><a href="{% url 'messenger:logout' %}">Logout</a></li>
+{% endblock links %}
+
+{% block main %}
+    <div class="contentWrapper">
+        <div class="content">
+            <h1>
+                Account Details
+            </h1>
+            <ul id="details">
+                <li>Username : {{username}}</li>
+                <li id="email" class="editable">Email :&nbsp;<span>{{email}}</span><div class="editButton" onclick="editbutton('email', 'email')"></div></li>
+                <li id="first_name" class="editable">First Name :&nbsp;<span>{{first_name}}</span><div class="editButton" onclick="editbutton('first_name')"></div></li>
+                <li id="last_name" class="editable">Last Name :&nbsp;<span>{{last_name}}</span><div class="editButton" onclick="editbutton('last_name')"></div></li>
+                <li id="status" class="editable">Status :&nbsp;<span>{{status}}</span><div class="editButton" onclick="editbutton('status')"></div></li>
+                <li id="read_receipts">
+                    Read Receipts
+                    <label class="switch">
+                        <input onchange="flipped('read_receipts')" type="checkbox" {% if read_receipts %} checked {% endif %}>
+                        <span class="slider"></span>
+                    </label>
+                </li>
+                <li id="show_online">
+                    Visible to Others
+                    <label class="switch">
+                        <input onchange="flipped('show_online')" type="checkbox" {% if show_online %} checked {% endif %}>
+                        <span class="slider"></span>
+                    </label>
+                </li>
+                <li id="birth_date" class="editable">Birth Date :&nbsp;<span> {{birth_date}}</span><div class="editButton" onclick="editbutton('birth_date', 'date')"></div></li>
+            </ul>
+        </div>
+    </div>
+{% endblock main %}
+
