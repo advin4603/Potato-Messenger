@@ -20,7 +20,7 @@
             <h1>Chats</h1>
             <div class="newChat">Add New Chat</div>
             <div class="search">
-                <input type="text" id="searchChat">
+                <input type="text" id="searchChat" oninput="searchKnownChats()">
                 <div class="searchButton">Search</div>
             </div>
             {% for chatname in chats %}
@@ -62,4 +62,5 @@
             </div>
         </div>
     </div>
+    <script src="{% static 'messenger/chatPageHandler.js' %}"></script>
 {% endblock main %}

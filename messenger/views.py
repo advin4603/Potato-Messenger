@@ -29,16 +29,33 @@ def changefield(request):
             request.user.save()
         except:
             data = {'success':False}
-            print(field, type(value))
             return JsonResponse(data)
     data = {'success':True}
     return JsonResponse(data)
 
 
 @login_required
+def get_chat_name(request):
+    chat_name = request.GET.get('chatName', None)
+    if chat_name is None:
+        return JsonResponse({'chats':[]})
+    else:
+        return JsonResponse(
+            {
+                'chats': [user.username if user==request.user else user.username for user in get_chat_list(request.user, chat_name)]
+            }
+        )
+    
+
+
+
+@login_required
 def chatpage(request):
     chat_list = get_chat_list(request.user)
-    chat_messages = get_chat_messages(request.user, chat_list[0])
+    if chat_list:
+        chat_messages = get_chat_messages(request.user, chat_list[0])
+    else:
+        chat_messages = []
     return render(request, 'messenger/chatpage.html', {
         "chats" : chat_list,
         "messages" : chat_messages
@@ -47,14 +64,21 @@ def chatpage(request):
 def get_chat_messages(user, other_user):
     return (
             user.received_messages.all().filter(sender=other_user) | other_user.received_messages.all().filter(sender=user)
-        ).order_by("-time")
+        ).order_by("time")
 
-def get_chat_list(user):
-    return list(
-        OrderedDict.fromkeys(
-                [i.receiver if i.sender==user else i.sender for i in (user.received_messages.all() | user.sent_messages.all()).order_by("-time")[:30]]
+def get_chat_list(user, start_match=None):
+    if start_match is None:
+        return list(
+            OrderedDict.fromkeys(
+                    [i.receiver if i.sender==user else i.sender for i in (user.received_messages.all() | user.sent_messages.all()).order_by("-time")[:30]]
+                )
             )
-        )
+    else:
+        return list(
+            OrderedDict.fromkeys(
+                    [i.receiver if i.sender==user else i.sender for i in (user.received_messages.all().filter(sender__username__startswith=start_match) | user.sent_messages.all().filter(receiver__username__startswith=start_match)).order_by("-time")[:30]]
+                )
+            )
 
 
 
@@ -91,7 +115,7 @@ def signup(request):
             user.profile.birth_date = profile.birth_date
             user.save()
             auth_login(request, user)
-            return redirect('index')
+            return HttpResponseRedirect(reverse('messenger:index'))
     else:
         form_1 = SignupForm(request.POST)
         form_2 = ProfileForm(request.POST)
