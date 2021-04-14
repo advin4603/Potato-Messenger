@@ -6,7 +6,7 @@
     font-family: 'Montserrat', sans-serif;
 }
 body{
-    background-color: rgb(255, 210, 173);
+    background-color: var(--light-color);
 }
 nav{
     margin: auto;
@@ -31,13 +31,13 @@ header{
     transition: all 250ms;
 }
 .links ul li a:hover{
-    background-color: rgb(32, 32, 32);
-    color: rgb(255, 210, 173);
-    border-color: rgb(32, 32, 32);;
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    border-color: var(--dark-color);
 }
 a{
     text-decoration: none;
-    color: rgb(32, 32, 32);;
+    color: var(--dark-color);
 }
 .links{
     float: right;

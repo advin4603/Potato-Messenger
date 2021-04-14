@@ -1,6 +1,6 @@
 .content{
-    background-color: rgb(32, 32, 32);
-    color:rgb(255, 210, 173);
+    background-color: var(--dark-color);
+    color:var(--light-color);
     padding:50px 10vw;
 }
 ul{
@@ -32,7 +32,7 @@ h1{
 }
 .editButton:hover{
     content: url('images/editLogoDark.svg');
-    background-color:rgb(255, 210, 173);
+    background-color:var(--light-color);
     
 }
 .editForm{
@@ -44,8 +44,8 @@ h1{
 }
 .editForm input{
     width: 95%;
-    background-color: rgb(32, 32, 32);
-    color: rgb(255, 210, 173);
+    background-color: var(--dark-color);
+    color: var(--light-color);
     border: solid;
     transition: all 250ms;
     margin: 0 5px;
@@ -54,8 +54,8 @@ h1{
     height: 30px;
 }
 input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, input[type=date]:focus, .editSubmit:hover{
-    background-color: rgb(255, 210, 173);
-    color: rgb(32, 32, 32);
+    background-color: var(--light-color);
+    color: var(--dark-color);
     border: solid;
     outline: rgb(255, 210, 173) solid 2px;
     border-radius: 0px;
@@ -117,7 +117,7 @@ input[type=checkbox] {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgb(32, 32, 32);
+    background-color: var(--dark-color);
     -webkit-transition: .4s;
     transition: .4s;
     outline:rgb(255, 210, 173) solid; 
@@ -130,22 +130,22 @@ input[type=checkbox] {
     width: 26px;
     left: 4px;
     bottom: 4px;
-    background-color: rgb(255, 210, 173);
+    background-color: var(--light-color);
     outline:rgb(32, 32, 32) solid; 
     -webkit-transition: .4s;
     transition: .4s;
 }
 input:checked + .slider:before{
-    background-color: rgb(32, 32, 32);
+    background-color: var(--dark-color);
     outline:rgb(255, 210, 173) solid; 
 }
 input:checked + .slider {
-    background-color: rgb(255, 210, 173);
+    background-color: var(--light-color);
     
 }
   
 input:focus + .slider {
-    box-shadow: 0 0 1px rgb(255, 210, 173);
+    box-shadow: 0 0 1px var(--light-color);
 }
   
 input:checked + .slider:before {

@@ -119,6 +119,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_URL = 'messenger:login'
 
 
 DEFAULT_STATUS = "Hi, I am using Potato Messenger"

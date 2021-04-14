@@ -6,6 +6,7 @@ from .forms import SignupForm, ProfileForm
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from collections import OrderedDict
 
 
 def index(request):
@@ -36,9 +37,25 @@ def changefield(request):
 
 @login_required
 def chatpage(request):
+    chat_list = get_chat_list(request.user)
+    chat_messages = get_chat_messages(request.user, chat_list[0])
     return render(request, 'messenger/chatpage.html', {
-        "chats":"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        "chats" : chat_list,
+        "messages" : chat_messages
         })
+
+def get_chat_messages(user, other_user):
+    return (
+            user.received_messages.all().filter(sender=other_user) | other_user.received_messages.all().filter(sender=user)
+        ).order_by("-time")
+
+def get_chat_list(user):
+    return list(
+        OrderedDict.fromkeys(
+                [i.receiver if i.sender==user else i.sender for i in (user.received_messages.all() | user.sent_messages.all()).order_by("-time")[:30]]
+            )
+        )
+
 
 
 

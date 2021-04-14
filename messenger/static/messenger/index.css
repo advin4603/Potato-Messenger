@@ -4,7 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
-    color: rgb(32, 32, 32);
+    color: var(--dark-color);
 }
 body{
     background-image: url("images\\potato_skin.jpg");
@@ -36,7 +36,7 @@ a{
     transition: all 250ms;
 }
 a:hover{
-    background-color: rgb(32, 32, 32);
-    color: rgb(255, 210, 173);
-    border-color: rgb(32, 32, 32);
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    border-color: var(--dark-color);
 }

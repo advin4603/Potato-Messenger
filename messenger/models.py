@@ -31,6 +31,6 @@ class Message(models.Model):
     time = models.DateTimeField()
     sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='sent_messages')
     receiver = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='received_messages')
-    reply_to = models.ForeignKey('self', on_delete=models.SET_NULL, null=True)
+    reply_to = models.ForeignKey('self', default=None, on_delete=models.SET_NULL, null=True, blank=True)
     read = models.BooleanField(default=False)
-    read_on = models.DateTimeField()
+    read_on = models.DateTimeField(null=True, default=None, blank=True)

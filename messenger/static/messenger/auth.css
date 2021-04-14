@@ -10,16 +10,16 @@
 input[type=text], input{
     width: 100%;
     display: block;
-    background-color: rgb(32, 32, 32);
-    color: rgb(255, 210, 173);
+    background-color: var(--dark-color);
+    color: var(--light-color);
     border: solid;
     transition: all 250ms;
     padding: 10px;
     cursor: text;
 }
 input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, input[type=date]:focus, input[type=submit]:hover{
-    background-color: rgb(255, 210, 173);
-    color: rgb(32, 32, 32);
+    background-color: var(--light-color);
+    color: var(--dark-color);
     border: solid;
     outline: rgb(255, 210, 173) solid 2px;
     border-radius: 0px;
@@ -58,8 +58,8 @@ h1{
 .content{
     font-size: 25px;
     margin-bottom:50px;
-    background-color: rgb(32, 32, 32);
-    color: rgb(255, 210, 173);
+    background-color: var(--dark-color);
+    color: var(--light-color);
 }
 .inputWrapper{
     height: 30px;
@@ -68,8 +68,8 @@ ul{
     list-style-type: none;
 }
 .errorWrapper ul li{
-    background-color: rgb(32, 32, 32);
-    color: rgb(255, 210, 173);
+    background-color: var(--dark-color);
+    color: var(--light-color);
     padding: 1vh 1vw;
     margin:30px;
     margin-bottom:10px;
