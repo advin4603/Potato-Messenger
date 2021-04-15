@@ -1,5 +1,6 @@
 {% extends 'messenger/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}
     Chats
@@ -24,7 +25,7 @@
                 <div class="searchButton">Search</div>
             </div>
             {% for chatname in chats %}
-                <div class="chat {% if chatname ==  chats.0 %}chatFocus{% endif %}">{{ chatname }}</div>
+                <div class="chat {% if chatname ==  chats.0 %}chatFocus{% endif %}" onClick="fetchChats('{{ chatname }}')" id="{{ chatname }}">{{ chatname }}</div>
             {% endfor %}
         </div>
     </div>
@@ -46,10 +47,12 @@
                         </div>
                         {% if message.sender == request.user %}
                             <div style="text-align: right">
-                                {{ message.time }}
+                                {{ message.time|naturaltime }}
                             </div>
                         {% else %}
-                            {{ message.time }}
+                            <div>
+                                {{ message.time }}
+                            </div>
                         {% endif %}
                     {% endfor %}
                 </div>

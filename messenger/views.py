@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from collections import OrderedDict
+from django.contrib.auth.models import User
+from django.contrib.humanize.templatetags.humanize import naturaltime
 
 
 def index(request):
@@ -45,9 +47,20 @@ def get_chat_name(request):
                 'chats': [user.username if user==request.user else user.username for user in get_chat_list(request.user, chat_name)]
             }
         )
+
+
+@login_required
+def fetch_chat_messages(request):
+    chat_name = request.GET.get('chatName', None)
+    if chat_name is None:
+        return JsonResponse({'messages':[]})
+    else:
+        return JsonResponse(
+            {
+                'messages': [[i.text, naturaltime(i.time), i.sender.username, i.receiver.username] for i in get_chat_messages(request.user, User.objects.get(username=chat_name))]
+            }
+        )
     
-
-
 
 @login_required
 def chatpage(request):
