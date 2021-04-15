@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 class Profile(models.Model):
@@ -11,6 +13,7 @@ class Profile(models.Model):
     status = models.CharField(max_length=64, default=settings.DEFAULT_STATUS)
     birth_date = models.DateField(null=True)
     read_receipts = models.BooleanField(default=True)
+    online = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
@@ -34,3 +37,19 @@ class Message(models.Model):
     reply_to = models.ForeignKey('self', default=None, on_delete=models.SET_NULL, null=True, blank=True)
     read = models.BooleanField(default=False)
     read_on = models.DateTimeField(null=True, default=None, blank=True)
+
+@receiver(post_save, sender=Message)
+def notify_receiver(sender, instance:Message, created, **kwargs):
+    if created:
+        if instance.receiver.profile.online:
+            channel_layer = get_channel_layer()
+            async_to_sync(channel_layer.group_send)(
+                "chat_%s" % instance.receiver.username,
+                {
+                    "chat_name":instance.sender.username,
+                    "type":'chat_message'
+
+                }
+            )
+
+

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'messenger.apps.MessengerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -70,6 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'potato.wsgi.application'
+ASGI_APPLICATION = 'potato.asgi.application'
 
 
 # Database
@@ -124,3 +126,9 @@ LOGIN_URL = 'messenger:login'
 
 
 DEFAULT_STATUS = "Hi, I am using Potato Messenger"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
