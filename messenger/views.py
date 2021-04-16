@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from collections import OrderedDict
 from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
+import datetime
+from .models import Message
 
 
 def index(request):
@@ -17,23 +19,33 @@ def index(request):
 
 @login_required
 def changefield(request):
-    field = request.GET.get('field', None)
-    value = request.GET.get('value', None)
-    if field in ("read_receipts", "show_online"):
-        value = True if value.lower() == "true" else False
-    try:
-        getattr(request.user, field)
-        setattr(request.user, field, value)
-        request.user.save()
-    except AttributeError:
+    if request.method == "POST":
+        field = request.POST.get('field', None)
+        value = request.POST.get('value', None)
+        if field in ("read_receipts", "show_online"):
+            value = True if value.lower() == "true" else False
         try:
-            setattr(request.user.profile, field, value)
+            getattr(request.user, field)
+            setattr(request.user, field, value)
             request.user.save()
-        except:
-            data = {'success':False}
-            return JsonResponse(data)
-    data = {'success':True}
-    return JsonResponse(data)
+        except AttributeError:
+            try:
+                setattr(request.user.profile, field, value)
+                request.user.save()
+            except:
+                data = {'success':False}
+                return JsonResponse(data)
+        data = {'success':True}
+        return JsonResponse(data)
+
+
+@login_required
+def send_message(request):
+    if request.method == "POST":
+        receiver = request.POST.get('receiver')
+        text = request.POST.get('text')
+        message = request.user.sent_messages.create(text=text, receiver=User.objects.get(username=receiver), time=datetime.datetime.now())
+        return JsonResponse({'id':message.id})
 
 
 @login_required
@@ -60,7 +72,22 @@ def fetch_chat_messages(request):
                 'messages': [[i.text, naturaltime(i.time), i.sender.username, i.receiver.username] for i in get_chat_messages(request.user, User.objects.get(username=chat_name))]
             }
         )
-    
+
+@login_required
+def fetch_message(request):
+    chat_id = request.GET.get('id', None)
+    if chat_id is not None:
+        message = Message.objects.get(pk=chat_id)
+        if message.sender == request.user or message.receiver == request.user:
+            return JsonResponse(
+                {
+                    'text':message.text,
+                    'sender':message.sender.username,
+                    'receiver':message.receiver.username,
+                    'time':naturaltime(message.time)
+                }
+            )
+
 
 @login_required
 def chatpage(request):

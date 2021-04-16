@@ -7,7 +7,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'messenger/account.css' %}">
-<script src="{% static 'messenger/editButton.js' %}"></script>
+
 {% endblock head %}
 
 {% block links %}
@@ -22,6 +22,7 @@
                 Account Details
             </h1>
             <ul id="details">
+                <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}'>  
                 <li>Username : {{username}}</li>
                 <li id="email" class="editable">Email :&nbsp;<span>{{email}}</span><div class="editButton" onclick="editbutton('email', 'email')"></div></li>
                 <li id="first_name" class="editable">First Name :&nbsp;<span>{{first_name}}</span><div class="editButton" onclick="editbutton('first_name')"></div></li>
@@ -47,3 +48,8 @@
     </div>
 {% endblock main %}
 
+
+{% block scripts %}
+    <script src="{% static 'messenger/editButton.js' %}"></script>
+    <script src="{% static 'messenger/sanitizer.js' %}"></script>
+{% endblock scripts %}

@@ -47,6 +47,7 @@ def notify_receiver(sender, instance:Message, created, **kwargs):
                 "chat_%s" % instance.receiver.username,
                 {
                     "chat_name":instance.sender.username,
+                    "id":instance.id,
                     "type":'chat_message'
 
                 }

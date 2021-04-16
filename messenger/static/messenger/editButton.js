@@ -24,9 +24,11 @@ function flipped(field){
     let newVal = document.getElementById(field).children[0].children[0].checked;
     $.ajax({
         url: '/ajax/changefield/',
+        type:"POST",
         data: {
           'field': field,
-          'value': newVal
+          'value': newVal,
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
         },
         dataType: 'json',
         success: function (data) {
@@ -36,24 +38,13 @@ function flipped(field){
         }
     });
 };
-function sanitize(string) {
-    const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#x27;',
-        "/": '&#x2F;',
-    };
-    const reg = /[&<>"'/]/ig;
-    return string.replace(reg, (match)=>(map[match]));
-  }
+
 function textChange(field){
     textForm = document.getElementById(field).nextSibling;
     textInput = textForm.children[0];
     textSubmit = textForm.children[1];
     if (textInput.value.length > 0 && textInput.value.length <= 128){
-        textSubmit.onclick = ()=>sendVal(field, sanitize(textInput.value));
+        textSubmit.onclick = ()=>sendVal(field, textInput.value, true);
         textSubmit.classList.remove("crossed");
         textSubmit.classList.add("ticked");
     } else{
@@ -90,18 +81,25 @@ function dateChange(field){
         dateSubmit.classList.add("crossed");
     };
 }
-function sendVal(field, val){
+function sendVal(field, val, isText=false){
     newTextField = document.getElementById(field).children[0];
     $.ajax({
         url: '/ajax/changefield/',
+        type:"POST",
         data: {
-          'field': field,
-          'value': val
+          'field': field,  
+          'value': val,
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
         },
         dataType: 'json',
         success: function (data) {
           if (data.success) {
-            newTextField.innerHTML = val;
+            if (isText){
+                newTextField.innerHTML = sanitize(val);
+            } else{
+                newTextField.innerHTML = val;
+            }
+            
             undoEditDel();
           }
         }

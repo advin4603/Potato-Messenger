@@ -39,6 +39,10 @@ function fetchChats(chatName){
     }
     document.getElementById(chatName).classList.add("chatFocus");
     document.querySelector(".chatName").innerText = chatName;
+    reloadChatBrowser(chatName);
+    
+};
+function reloadChatBrowser(chatName){
     Array.from(document.querySelector(".chatBrowser").children).forEach(element => {
         element.parentNode.removeChild(element);        
     });
@@ -50,28 +54,79 @@ function fetchChats(chatName){
         dataType: 'json',
         success: function (data) {
             let message_list = data['messages'];
-            message_list.forEach(data => {
-                let text, time, sender, receiver;
-                [text, time, sender, receiver] = data;
-                let newChatBubbleWrapper = document.createElement("div");
-                newChatBubbleWrapper.classList.add("chatBubbleWrapper");
-                let newChatBubble = document.createElement("div");
-                newChatBubble.classList.add("chatBubble");
-                newTime = document.createElement("div");
-                newTime.innerText = time;
-                if (receiver == chatName){
-                    newChatBubble.classList.add("rightChat")
-                    newTime.style.textAlign= "right";
-                }
-                newChatBubble.innerText = text;
-                newChatBubbleWrapper.appendChild(newChatBubble);
-                document.querySelector(".chatBrowser").appendChild(newChatBubbleWrapper);
-                document.querySelector(".chatBrowser").appendChild(newTime);
-
-                
-
+            message_list.forEach(item => {
+                putChat(item);
             });
+            scrollChatToBottom();
         }
     });
 };
+function putChat(data){
+    let chatName = document.querySelector(".chatName").innerText;
+    let text, time, sender, receiver;
+    [text, time, sender, receiver] = data;
+    let newChatBubbleWrapper = document.createElement("div");
+    newChatBubbleWrapper.classList.add("chatBubbleWrapper");
+    let newChatBubble = document.createElement("div");
+    newChatBubble.classList.add("chatBubble");
+    newTime = document.createElement("div");
+    newTime.innerText = time;
+    newTime.classList.add("datetime");
+    if (receiver == chatName){
+        newChatBubble.classList.add("rightChat")
+        newTime.style.textAlign= "right";
+    }
+    newChatBubble.innerText = text;
+    newChatBubbleWrapper.appendChild(newChatBubble);
+    document.querySelector(".chatBrowser").appendChild(newChatBubbleWrapper);
+    document.querySelector(".chatBrowser").appendChild(newTime);
+}
+function fetchChat(id){
+    $.ajax({
+        url: '/ajax/fetchmessage/',
+        data: {
+          'id':id
+        },
+        dataType: 'json',
+        success: function (data) {
+            putChat([data.text, data.time, data.sender, data.receiver]);
+        }
+    });
 
+}
+
+document.querySelector(".messageSend").onclick = function(){
+    let text = document.querySelector("#messageInput").value;
+    document.querySelector('#messageInput').value = "";
+    let receiver = document.querySelector(".chatName").innerText;
+    if (text)
+    $.ajax({
+        url: '/ajax/sendmessage/',
+        type:"POST",
+        data: {
+          'receiver': receiver,
+          'text':text,
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        },
+        dataType: 'json',
+        success: function (data) {
+            fetchChat(data['id']);
+            scrollChatSmoothToBottom();
+        }
+    });
+};
+function scrollChatSmoothToBottom (id, time=500) {
+    $(".chatBrowser").animate({
+       scrollTop: $(".chatBrowser")[0].scrollHeight
+    }, time);
+};
+function scrollChatToBottom(){
+    let browser = document.querySelector(".chatBrowser");
+    browser.scroll(0, browser.scrollHeight);
+};
+function chatIsScrolledBottom(){
+    let browser = document.querySelector(".chatBrowser");
+    let $browser = $(browser);
+    return browser.scrollHeight - $browser.scrollTop() - $browser.outerHeight() < 1;
+}
+scrollChatToBottom();

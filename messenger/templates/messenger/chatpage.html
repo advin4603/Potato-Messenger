@@ -42,16 +42,16 @@
                     {% for message in messages %}
                         <div class="chatBubbleWrapper">
                             <div class="chatBubble {% if message.sender == request.user %}rightChat{% endif %}">
-                                {{ message.text }}
+                                    <pre>{{ message.text }}</pre>
                             </div>
                         </div>
                         {% if message.sender == request.user %}
-                            <div style="text-align: right">
+                            <div style="text-align: right" class="datetime">
                                 {{ message.time|naturaltime }}
                             </div>
                         {% else %}
-                            <div>
-                                {{ message.time }}
+                            <div class="datetime">
+                                {{ message.time|naturaltime }}
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -60,11 +60,15 @@
             <div class="chatFooterWrapper">
                 <div class="chatFooter">
                     <input type="text" id="messageInput">
+                    <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}'> 
                     <div class="messageSend">Send</div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock main %}
+
+{% block scripts %}
     <script src="{% static 'messenger/chatPageHandler.js' %}"></script>
     <script src="{% static 'messenger/chatSocketManager.js' %}"></script>
-{% endblock main %}
+{% endblock scripts %}
