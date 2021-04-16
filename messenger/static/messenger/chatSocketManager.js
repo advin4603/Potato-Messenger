@@ -3,6 +3,9 @@ const chatSocket = new WebSocket(
     + window.location.host
     + '/ws/chat/'
 );
+function insertAfter(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+};
 
 chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
@@ -14,6 +17,11 @@ chatSocket.onmessage = function(e) {
         } else{
             fetchChat(data.id)
         }
+    } else{
+        let chat_name = document.getElementById(data.chat_name);
+        let new_chat_name = chat_name.cloneNode(true);
+        chat_name.parentNode.removeChild(chat_name);
+        insertAfter(document.querySelector(".search"), new_chat_name);
     }
 };
 
