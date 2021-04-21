@@ -33,6 +33,7 @@ function fetchChats(chatName){
     if (document.querySelector(".chatName").innerText==chatName){
         return;
     }
+    removeIncrement(chatName);
     let oldFocussedChat = document.querySelector(".chatFocus");
     if (oldFocussedChat){
         oldFocussedChat.classList.remove("chatFocus");
@@ -111,6 +112,8 @@ document.querySelector(".messageSend").onclick = function(){
         dataType: 'json',
         success: function (data) {
             fetchChat(data['id']);
+            putChatFront(receiver);
+            removeIncrement(receiver);
             scrollChatSmoothToBottom();
         }
     });

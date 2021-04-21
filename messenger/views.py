@@ -16,6 +16,9 @@ from .models import Message
 def index(request):
     return render(request, 'messenger/index.html')
 
+def empty(request):
+    return render(request, 'messenger/empty.html')
+
 
 @login_required
 def changefield(request):
@@ -96,6 +99,8 @@ def chatpage(request):
         chat_messages = get_chat_messages(request.user, chat_list[0])
     else:
         chat_messages = []
+    
+    print(chat_list)
     return render(request, 'messenger/chatpage.html', {
         "chats" : chat_list,
         "messages" : chat_messages
@@ -110,13 +115,13 @@ def get_chat_list(user, start_match=None):
     if start_match is None:
         return list(
             OrderedDict.fromkeys(
-                    [i.receiver if i.sender==user else i.sender for i in (user.received_messages.all() | user.sent_messages.all()).order_by("-time")[:30]]
+                    [i.receiver if i.sender==user else i.sender for i in (user.received_messages.all() | user.sent_messages.all()).order_by("-time")]
                 )
             )
     else:
         return list(
             OrderedDict.fromkeys(
-                    [i.receiver if i.sender==user else i.sender for i in (user.received_messages.all().filter(sender__username__startswith=start_match) | user.sent_messages.all().filter(receiver__username__startswith=start_match)).order_by("-time")[:30]]
+                    [i.receiver if i.sender==user else i.sender for i in (user.received_messages.all().filter(sender__username__startswith=start_match) | user.sent_messages.all().filter(receiver__username__startswith=start_match)).order_by("-time")]
                 )
             )
 

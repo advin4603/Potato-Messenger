@@ -17,8 +17,10 @@ nav{
 header{
     background-image: url('images/potato_skin.jpg');
 }
-.links ul{
+ul{
     list-style: none;
+}
+.links ul{
     display: flex;
 }
 .links ul li{
@@ -52,4 +54,54 @@ main{
     padding-top: 10vh;
     margin: auto;
     width: 80vw;
+}
+.dropDown{
+    display: none;
+}
+.dropDownLinks{
+    display: none;
+}
+@media only screen and (max-width: 640px) {
+    .links{
+        display: none;
+    }
+    nav{
+        text-align: center;
+        height: 10vh;
+        padding-top: 3.5vh;
+    }
+    .logo{
+        float: none;
+    }
+    .dropDown{
+        display: block;
+        margin: auto;
+        width: 5%;
+        padding-bottom: 15px;
+        text-align: center;
+        cursor: pointer;
+        color: var(--dark-color);
+        font-weight: 700;
+    }
+    .dropDownLinks{
+        margin: auto;
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+        display: block;
+    }
+    .dropDownLinks ul li{
+        margin-bottom: 25px;
+    }
+    .dropDownLinks ul li a{
+        border-style: solid;
+        font-weight: 700;
+        transition: all 250ms;
+        padding: 5px;
+    }
+    .dropDownLinks ul li a:hover{
+        background-color: var(--dark-color);
+        color: var(--light-color);
+        border-color: var(--dark-color);
+    }
 }

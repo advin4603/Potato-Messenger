@@ -25,7 +25,12 @@
                 <div class="searchButton">Search</div>
             </div>
             {% for chatname in chats %}
-                <div class="chat {% if chatname ==  chats.0 %}chatFocus{% endif %}" onClick="fetchChats('{{ chatname }}')" id="{{ chatname }}">{{ chatname }}</div>
+                <div class="chat {% if chatname ==  chats.0 %}chatFocus{% endif %}" onClick="fetchChats('{{ chatname }}')" id="{{ chatname }}">
+                    {{ chatname }}
+                    <!-- <span>
+                        
+                    </span> -->
+                </div>
             {% endfor %}
         </div>
     </div>

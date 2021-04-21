@@ -33,12 +33,16 @@
                 </ul>
             </div>
         </nav>
+        <div class="dropDown">
+            V
+        </div>
     </header>
     <main>
         {% block main %}
         {% endblock main %}
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="{% static 'messenger/dropDown.js' %}"></script>
     {% block scripts %}
     {% endblock scripts %}
 </body>
