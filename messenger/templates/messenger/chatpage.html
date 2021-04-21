@@ -16,20 +16,25 @@
 {% endblock links %}
 
 {% block main %}
+    <div class="modal">
+        <div class="modalContent">
+            <span>X</span>
+            <h1>Add New Chats</h1>
+            <div class="inputWrapper">
+                <input type="text" id="addChat" placeholder="Search">
+            </div>
+        </div>
+    </div>
     <div class="leftWrapper">
         <div class="left">
             <h1>Chats</h1>
             <div class="newChat">Add New Chat</div>
             <div class="search">
-                <input type="text" id="searchChat" oninput="searchKnownChats()">
-                <div class="searchButton">Search</div>
+                <input type="text" id="searchChat" oninput="searchKnownChats()" placeholder="Search">
             </div>
             {% for chatname in chats %}
                 <div class="chat {% if chatname ==  chats.0 %}chatFocus{% endif %}" onClick="fetchChats('{{ chatname }}')" id="{{ chatname }}">
                     {{ chatname }}
-                    <!-- <span>
-                        
-                    </span> -->
                 </div>
             {% endfor %}
         </div>

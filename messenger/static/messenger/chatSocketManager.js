@@ -10,6 +10,10 @@ function insertAfter(referenceNode, newNode) {
 chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
     let currentChatName = document.querySelector(".chatName").innerText;
+    let inputText = document.getElementById("searchChat").value;
+    if (!data.chat_name.startsWith(inputText)){
+        return;
+    }
     putChatFront(data.chat_name);
     if (data.chat_name == currentChatName){
         if (chatIsScrolledBottom()){

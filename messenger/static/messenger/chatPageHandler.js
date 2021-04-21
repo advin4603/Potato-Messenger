@@ -132,4 +132,16 @@ function chatIsScrolledBottom(){
     let $browser = $(browser);
     return browser.scrollHeight - $browser.scrollTop() - $browser.outerHeight() < 1;
 }
+document.querySelector(".newChat").onclick = function(){
+    document.querySelector(".modal").style.display = "flex";
+}
+document.querySelector(".modalContent span").onclick = function(){
+    document.querySelector(".modal").style.display = "none";
+}
+window.onclick = function(event) {
+    let modal = document.querySelector(".modal")
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
 scrollChatToBottom();

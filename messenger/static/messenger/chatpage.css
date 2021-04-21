@@ -54,8 +54,6 @@ body{
     margin: auto;
     text-align: center;
     margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
 }
 .search input{
     background-color: var(--dark-color);
@@ -66,18 +64,17 @@ body{
     padding: 0 10px;
     transition: all 0.2s;
 }
-.search input:focus, .searchButton:hover, .newChat:hover, #messageInput:focus, .messageSend:hover{
+::placeholder{
+    text-align: center;
+    color: var(--light-color);
+}
+.search input:focus, .newChat:hover, #messageInput:focus, .messageSend:hover, .modalContent span:hover, #addChat:focus{
     background-color: var(--light-color);
     color: var(--dark-color);
     border-radius: 0;
     outline:rgb(255, 210, 173) solid 2px;
 }
-.searchButton{
-    padding: 0 10px;
-    border: solid;
-    transition: all 0.2s;
-    cursor: pointer;
-}
+
 .chat{
     width: 80%;
     margin: auto;
@@ -227,9 +224,72 @@ pre {
 .datetime{
     margin: 0 10px 20px 10px;
 }
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+  
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
 
-@media only screen and (max-width: 870px) {
-    /* .chat{
-        width: 75vw;
-    } */
+}
+.modalContent {
+    position: relative;
+    color:var(--light-color); ;
+    background-color: var(--dark-color);
+    margin: auto;
+    border: solid;
+    width: 50%;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    height: 75vh;
+}
+.modalContent span{
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    border: solid;
+    padding: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.modalContent h1{
+    width: 50%;
+    margin: auto;
+    border: solid;
+    text-align: center;
+    margin-top: 15px;
+}
+.inputWrapper{
+    margin: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+#addChat{
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    border: solid;
+    transition: all 0.2s;
+    width: 50%;
+    padding: 5px 15px;
 }
