@@ -63,6 +63,19 @@ def get_chat_name(request):
     )
 
 
+@login_required
+def set_read(request):
+    if request.method == "POST":
+        msg_id = int(request.POST.get('id'))
+        msg = Message.objects.get(pk=msg_id)
+        if msg.receiver == request.user:
+            msg.read_on = datetime.datetime.now() if not msg.read else msg.read_on
+            msg.read = True
+            msg.save()
+            return JsonResponse({'success':True})
+    return JsonResponse({'success':False})
+
+
 
 @login_required
 def get_new_chats(request):
@@ -86,7 +99,7 @@ def fetch_chat_messages(request):
     else:
         return JsonResponse(
             {
-                'messages': [[i.text, naturaltime(i.time), i.sender.username, i.receiver.username] for i in get_chat_messages(request.user, other_user)],
+                'messages': [[i.text, naturaltime(i.time), i.sender.username, i.receiver.username, i.read, i.id] for i in get_chat_messages(request.user, other_user)],
                 'online': other_user.profile.online
             }
         )
@@ -102,7 +115,9 @@ def fetch_message(request):
                     'text':message.text,
                     'sender':message.sender.username,
                     'receiver':message.receiver.username,
-                    'time':naturaltime(message.time)
+                    'time':naturaltime(message.time),
+                    'read':message.read,
+                    'id':message.id
                 }
             )
 

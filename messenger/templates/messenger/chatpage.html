@@ -52,7 +52,7 @@
                 <div class="chatBrowser">
                     {% for message in messages %}
                         <div class="chatBubbleWrapper">
-                            <div class="chatBubble {% if message.sender == request.user %}rightChat{% endif %}">
+                            <div class="chatBubble {% if message.sender == request.user %}rightChat{% else %}{{ message.read }}{% endif %}" id="{{ message.id }}">
                                     <pre>{{ message.text }}</pre>
                             </div>
                         </div>
@@ -82,5 +82,6 @@
 {% block scripts %}
     <script src="{% static 'messenger/chatPageHandler.js' %}"></script>
     <script src="{% static 'messenger/chatSocketManager.js' %}"></script>
+    <script src="{% static 'messenger/chatReader.js' %}"></script>
     <script src="{% static 'messenger/onlineSocketManager.js' %}"></script>
 {% endblock scripts %}

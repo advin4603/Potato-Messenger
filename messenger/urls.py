@@ -16,5 +16,6 @@ urlpatterns = [
     path('ajax/sendmessage/', views.send_message, name="send_message"),
     path('chats/', views.chatpage, name='chatpage'),
     path('ajax/getnewchats/', views.get_new_chats, name='get_new_chats'),
+    path('ajax/setread/', views.set_read, name='set_read'),
     path('empty/', views.empty, name='empty')
 ]

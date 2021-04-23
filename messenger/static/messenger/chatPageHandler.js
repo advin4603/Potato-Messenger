@@ -66,26 +66,32 @@ function reloadChatBrowser(chatName){
                 putChat(item);
             });
             scrollChatToBottom();
+            checkRead();
         }
     });
 };
 function putChat(data){
     let chatName = document.querySelector(".chatName").innerText;
-    let text, time, sender, receiver;
-    [text, time, sender, receiver] = data;
+    let text, time, sender, receiver, read, id;
+    [text, time, sender, receiver, read, id] = data;
     let newChatBubbleWrapper = document.createElement("div");
     newChatBubbleWrapper.classList.add("chatBubbleWrapper");
     let newChatBubble = document.createElement("div");
     newChatBubble.classList.add("chatBubble");
+    newChatBubble.id = `${id}`;
     newTime = document.createElement("div");
     newTime.innerText = time;
     newTime.classList.add("datetime");
     if (receiver == chatName){
-        newChatBubble.classList.add("rightChat")
+        newChatBubble.classList.add("rightChat");
         newTime.style.textAlign= "right";
+    } else{
+        const isRead = (read)? "True" : "False";
+        newChatBubble.classList.add(isRead);
     }
     newChatBubble.innerText = text;
     newChatBubbleWrapper.appendChild(newChatBubble);
+    checkRead();
     document.querySelector(".chatBrowser").appendChild(newChatBubbleWrapper);
     document.querySelector(".chatBrowser").appendChild(newTime);
 }
@@ -97,7 +103,7 @@ function fetchChat(id){
         },
         dataType: 'json',
         success: function (data) {
-            putChat([data.text, data.time, data.sender, data.receiver]);
+            putChat([data.text, data.time, data.sender, data.receiver, data.read, id]);
         }
     });
 
