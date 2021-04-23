@@ -21,7 +21,9 @@
             <span>X</span>
             <h1>Add New Chats</h1>
             <div class="inputWrapper">
-                <input type="text" id="addChat" placeholder="Search">
+                <input type="text" id="addChat" placeholder="Search" oninput="searchNewChats()">
+            </div>
+            <div class="newChatNameBrowser">
             </div>
         </div>
     </div>
@@ -43,9 +45,8 @@
     <div class="rightWrapper">
         <div class="right">
             <div class="chatNameWrapper">
-                <div class="chatName">
-                    {{ chats.0 }}
-                </div>
+                
+                <div class="chatName">{{ chats.0 }}</div>&nbsp;:&nbsp;<div class="isOnline">{{ online }}</div>
             </div>
             <div class="chatBrowserWrapper">
                 <div class="chatBrowser">
@@ -81,4 +82,5 @@
 {% block scripts %}
     <script src="{% static 'messenger/chatPageHandler.js' %}"></script>
     <script src="{% static 'messenger/chatSocketManager.js' %}"></script>
+    <script src="{% static 'messenger/onlineSocketManager.js' %}"></script>
 {% endblock scripts %}

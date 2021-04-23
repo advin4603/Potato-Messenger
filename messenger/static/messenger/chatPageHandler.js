@@ -1,8 +1,5 @@
 function searchKnownChats(){
     let inputText = document.getElementById("searchChat").value;
-    document.querySelectorAll(".chat").forEach(element => {
-        element.parentNode.removeChild(element);        
-    });
     $.ajax({
         url: '/ajax/getchatname/',
         data: {
@@ -10,8 +7,11 @@ function searchKnownChats(){
         },
         dataType: 'json',
         success: function (data) {
+            document.querySelectorAll(".chat").forEach(element => {
+                element.parentNode.removeChild(element);        
+            });
             let chat_list = data['chats'];
-            parentElement = document.querySelector(".left");
+            let parentElement = document.querySelector(".left");
             let focussedChat = document.querySelector(".chatName").innerText;
             chat_list.forEach(chatName => {
                 let newElem = document.createElement("div");
@@ -30,15 +30,17 @@ function searchKnownChats(){
 
 
 function fetchChats(chatName){
-    if (document.querySelector(".chatName").innerText==chatName){
-        return;
-    }
-    removeIncrement(chatName);
     let oldFocussedChat = document.querySelector(".chatFocus");
     if (oldFocussedChat){
         oldFocussedChat.classList.remove("chatFocus");
     }
     document.getElementById(chatName).classList.add("chatFocus");
+    if (document.querySelector(".chatName").innerText==chatName){
+        return;
+    }
+    removeIncrement(chatName);
+    
+    changeOnline(chatName);
     document.querySelector(".chatName").innerText = chatName;
     reloadChatBrowser(chatName);
     
@@ -55,6 +57,11 @@ function reloadChatBrowser(chatName){
         dataType: 'json',
         success: function (data) {
             let message_list = data['messages'];
+            if (data['online']){
+                document.querySelector(".isOnline").innerText = "Online";
+            } else{
+                document.querySelector(".isOnline").innerText = "Offline";
+            }
             message_list.forEach(item => {
                 putChat(item);
             });
@@ -143,5 +150,31 @@ window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
     }
-  }
+}
+function searchNewChats(){
+    const queryText = document.querySelector("#addChat").value;
+    document.querySelectorAll(".newChatNameWrapper").forEach(elem => elem.remove())
+    $.ajax({
+        url: '/ajax/getnewchats/',
+        data: {
+          'chatName':queryText
+        },
+        dataType: 'json',
+        success: function (data) {
+            let chat_list = data['chats'];
+            let chatBrowser = document.querySelector(".newChatNameBrowser");
+            chat_list.forEach(chatName => {
+                let newElem = document.createElement("div");
+                newElem.classList.add("newChatNameWrapper");
+                newElem.innerHTML = `<div class="newChatName" onclick="addNewChat('${chatName}')">${chatName}</div>`;
+                chatBrowser.appendChild(newElem);
+            });
+        }
+    });
+}
+function addNewChat(chatName){
+    document.querySelector(".modal").style.display = "none";
+    putChatFront(chatName);
+    fetchChats(chatName);
+}
 scrollChatToBottom();

@@ -33,15 +33,16 @@ function putChatFront(chatName){
     let new_chat_name;
     if (chat_name){
         new_chat_name = chat_name.cloneNode(true);
-        chat_name.parentNode.removeChild(chat_name);
-        
+        chat_name.parentNode.removeChild(chat_name); 
     } else{
         new_chat_name = document.createElement("div");
-        new_chat_name.innerText = chat_name;
-        new_chat_name.id = chat_name;
-        new_chat_name.onclick = () => fetchChats(chat_name);
+        new_chat_name.innerText = chatName;
+        new_chat_name.id = chatName;
+        new_chat_name.classList.add("chat");
+        new_chat_name.onclick = () => fetchChats(chatName); 
     }
     insertAfter(document.querySelector(".search"), new_chat_name);
+    
     
 }
 function incrementUnread(chatName){

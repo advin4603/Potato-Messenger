@@ -36,9 +36,16 @@
                     </label>
                 </li>
                 <li id="show_online">
-                    Visible to Others
+                    Show Online Status
                     <label class="switch">
                         <input onchange="flipped('show_online')" type="checkbox" {% if show_online %} checked {% endif %}>
+                        <span class="slider"></span>
+                    </label>
+                </li>
+                <li id="visible">
+                    Visible to Others 
+                    <label class="switch">
+                        <input onchange="flipped('visible')" type="checkbox" {% if visible %} checked {% endif %}>
                         <span class="slider"></span>
                     </label>
                 </li>

@@ -15,5 +15,6 @@ urlpatterns = [
     path('ajax/fetchmessage/', views.fetch_message, name="fetch_message"),
     path('ajax/sendmessage/', views.send_message, name="send_message"),
     path('chats/', views.chatpage, name='chatpage'),
+    path('ajax/getnewchats/', views.get_new_chats, name='get_new_chats'),
     path('empty/', views.empty, name='empty')
 ]

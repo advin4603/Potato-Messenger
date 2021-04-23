@@ -10,6 +10,7 @@ from asgiref.sync import async_to_sync
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     show_online = models.BooleanField(default=True)
+    visible = models.BooleanField(default=True)
     status = models.CharField(max_length=64, default=settings.DEFAULT_STATUS)
     birth_date = models.DateField(null=True)
     read_receipts = models.BooleanField(default=True)
