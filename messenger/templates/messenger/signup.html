@@ -8,6 +8,8 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'messenger/auth.css' %}">
+    <link  href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'messenger/profilePic.css' %}">
 {% endblock head %}
 
 
@@ -17,13 +19,38 @@
     
 
 {% block main %}
+    <!-- MODAL TO CROP THE IMAGE -->
+    <div class="modal cropModal">
+        <div class="modalContent cropModalContent">
+            <span class="closeCropModal">&times;</span>
+            <h1>Profile Picture</h1>
+            <div class="imageWrapper">
+                <img src="" id="image" style="max-width: 100%;max-height: 50vh;">
+            </div>
+            <div class="modalFooter">
+                <div class="leftButtons">
+                  <button class="zoomIn">
+                      +
+                  </button>
+                  <button class="zoomOut">
+                    -
+                  </button>
+                </div>
+                <div class="rightButtons">
+                    <button type="button" class="cancel">Nevermind</button>
+                    <button type="button" class="cropAndUpload">Crop and upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="contentWrapper">
         <div class="content">
             <h1>
                 Sign Up
             </h1>
             <div class="formWrapper">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="errorWrapper bottomMargin">
                         {{ form_1.non_field_errors }}
@@ -31,6 +58,24 @@
                     <div class="errorWrapper bottomMargin">
                         {{ form_2.non_field_errors }}
                     </div>
+                    <div class="errorWrapper bottomMargin">
+                        {{ photo_form.non_field_errors }}
+                    </div>
+                    
+                    <div class="errorWrapper">
+                        {{ photo_form.profile_picture.errors }}
+                    </div>
+                    <div class="fieldWrapper">
+                        <div class="labelWrapper">
+                            {{ photo_form.profile_picture.label_tag }}
+                        </div>
+                        {% for field in photo_form %}
+                        <div class="inputWrapper">
+                            {{ field }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
                     {% for field in form_1 %}
                         <div class="errorWrapper">
                             {{ field.errors }}
@@ -57,6 +102,7 @@
                             </div>
                         </div>
                     {% endfor %}
+                    
                     <div class="submitWrapper">
                         <input type="submit" value="Submit">
                     </div>
@@ -65,3 +111,6 @@
         </div>
     </div>
 {% endblock main %}
+{% block scripts %}
+    <script src="{% static 'messenger/profilePic.js' %}"></script>
+{% endblock scripts %}

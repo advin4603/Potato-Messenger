@@ -8,13 +8,14 @@ from asgiref.sync import async_to_sync
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     show_online = models.BooleanField(default=True)
     visible = models.BooleanField(default=True)
     status = models.CharField(max_length=64, default=settings.DEFAULT_STATUS)
     birth_date = models.DateField(null=True)
     read_receipts = models.BooleanField(default=True)
     online = models.BooleanField(default=False)
+    profile_picture = models.ImageField(default='default_pic.png', upload_to='profile_pictures')
 
     def __str__(self):
         return self.user.username
@@ -33,8 +34,8 @@ def save_profile(sender, instance, **kwargs):
 class Message(models.Model):
     text = models.TextField()
     time = models.DateTimeField()
-    sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='sent_messages')
-    receiver = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='received_messages')
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='sent_messages')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='received_messages')
     reply_to = models.ForeignKey('self', default=None, on_delete=models.SET_NULL, null=True, blank=True)
     read = models.BooleanField(default=False)
     read_on = models.DateTimeField(null=True, default=None, blank=True)

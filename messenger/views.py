@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import SignupForm, ProfileForm
+from .forms import SignupForm, ProfileForm, PhotoForm
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -16,8 +16,40 @@ from .models import Message
 def index(request):
     return render(request, 'messenger/index.html')
 
+@login_required
 def empty(request):
-    return render(request, 'messenger/empty.html')
+    if request.method == 'POST':
+        form = PhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False).profile_picture
+            request.user.profile.profile_picture = image
+            request.user.profile.save(update_fields=['profile_picture'])
+            return redirect('messenger:index')
+    else:
+        form = PhotoForm()
+    return render(request, 'messenger/empty.html', {'form': form})
+
+def signup(request):
+    if request.method == 'POST':
+        form_1 = SignupForm(request.POST)
+        form_2 = ProfileForm(request.POST)
+        photo_form = PhotoForm(request.POST, request.FILES)
+        
+        if form_1.is_valid() and form_2.is_valid() and photo_form.is_valid():
+            user = form_1.save()
+            profile = form_2.save(commit=False)
+            photo_profile = photo_form.save()
+            user.profile.birth_date = profile.birth_date
+            user.profile.profile_picture = photo_profile.profile_picture
+            photo_profile.delete()
+            user.save()
+            auth_login(request, user)
+            return HttpResponseRedirect(reverse('messenger:index'))
+    else:
+        form_1 = SignupForm(request.POST)
+        form_2 = ProfileForm(request.POST)
+        photo_form = PhotoForm()
+    return render(request, 'messenger/signup.html', {'form_1':form_1, 'form_2':form_2, 'photo_form':photo_form})
 
 
 def user_account(request, username):
@@ -200,22 +232,6 @@ def logout(request):
         return HttpResponseRedirect(reverse('messenger:index'))
 
 
-def signup(request):
-    if request.method == 'POST':
-        form_1 = SignupForm(request.POST)
-        form_2 = ProfileForm(request.POST)
-        
-        if form_1.is_valid() and form_2.is_valid():
-            user = form_1.save()
-            profile = form_2.save(commit=False)
-            user.profile.birth_date = profile.birth_date
-            user.save()
-            auth_login(request, user)
-            return HttpResponseRedirect(reverse('messenger:index'))
-    else:
-        form_1 = SignupForm(request.POST)
-        form_2 = ProfileForm(request.POST)
-    return render(request, 'messenger/signup.html', {'form_1':form_1, 'form_2':form_2})
 
 
 def login(request):
