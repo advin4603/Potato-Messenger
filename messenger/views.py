@@ -20,6 +20,13 @@ def empty(request):
     return render(request, 'messenger/empty.html')
 
 
+def user_account(request, username):
+    if request.user.is_authenticated and request.user.username == username:
+        return HttpResponseRedirect(reverse('messenger:account'))
+    user = User.objects.get(username=username)
+    return render(request, 'messenger/user_account.html', {'user':user, 'profile':user.profile})
+
+
 @login_required
 def changefield(request):
     if request.method == "POST":
@@ -87,7 +94,19 @@ def get_new_chats(request):
             'chats': [user.username for user in User.objects.all().filter(username__startswith = query).filter(profile__visible=True).order_by("-last_login") if user != request.user]
         }
     )
-    
+
+
+@login_required
+def get_chat_info(request):
+    id = request.GET.get('id', None)
+    message = Message.objects.get(pk=int(id))
+    if message.receiver == request.user or message.sender == request.user:
+        return JsonResponse({
+            "sent_on" : message.time.strftime("%a %#d %b %Y %#I:%M %p"),
+            "read" : message.read,
+            "read_on" : message.read_on.strftime("%a %#d %b %Y %#I:%M %p") if message.read else None
+        })
+    return JsonResponse({})
 
 
 @login_required
@@ -99,8 +118,8 @@ def fetch_chat_messages(request):
     else:
         return JsonResponse(
             {
-                'messages': [[i.text, naturaltime(i.time), i.sender.username, i.receiver.username, i.read, i.id] for i in get_chat_messages(request.user, other_user)],
-                'online': other_user.profile.online
+                'messages': [[i.text, i.time.strftime("%a %#d %b %Y %#I:%M %p"), i.sender.username, i.receiver.username, i.read, i.id] for i in get_chat_messages(request.user, other_user)],
+                'online': other_user.profile.online if other_user.profile.show_online else False
             }
         )
 
@@ -115,7 +134,7 @@ def fetch_message(request):
                     'text':message.text,
                     'sender':message.sender.username,
                     'receiver':message.receiver.username,
-                    'time':naturaltime(message.time),
+                    'time':message.time.strftime("%a %#d %b %Y %#I:%M %p"),
                     'read':message.read,
                     'id':message.id
                 }
@@ -129,7 +148,8 @@ def chatpage(request):
         chat_messages = get_chat_messages(request.user, chat_list[0])
     else:
         chat_messages = []
-    online= User.objects.get(username=chat_list[0]).profile.online
+    other_user = User.objects.get(username=chat_list[0]).profile
+    online= other_user.online if other_user.show_online else False
     return render(request, 'messenger/chatpage.html', {
         "chats" : chat_list,
         "messages" : chat_messages,
@@ -164,7 +184,7 @@ def account(request):
         'username':request.user.username, 
         'first_name':request.user.first_name, 
         'last_name':request.user.last_name,
-        'birth_date':str(request.user.profile.birth_date),
+        'birth_date':request.user.profile.birth_date.strftime("%a %#d %b %Y"),
         'email':request.user.email,
         'status':request.user.profile.status,
         'read_receipts':request.user.profile.read_receipts,

@@ -27,7 +27,11 @@ function searchKnownChats(){
         }
     });
 };
-
+document.querySelector(".chatName").onclick = function(){
+    user = document.querySelector(".chatName").innerText;
+    url = document.querySelector("#accountUrl").value + user + "/";
+    window.open(url);
+}
 
 function fetchChats(chatName){
     let oldFocussedChat = document.querySelector(".chatFocus");
@@ -57,10 +61,11 @@ function reloadChatBrowser(chatName){
         dataType: 'json',
         success: function (data) {
             let message_list = data['messages'];
+            console.log(data);
             if (data['online']){
-                document.querySelector(".isOnline").innerText = "Online";
+                document.querySelector(".isOnline").id = "Online";
             } else{
-                document.querySelector(".isOnline").innerText = "Offline";
+                document.querySelector(".isOnline").id = "Offline";
             }
             message_list.forEach(item => {
                 putChat(item);
@@ -72,28 +77,59 @@ function reloadChatBrowser(chatName){
 };
 function putChat(data){
     let chatName = document.querySelector(".chatName").innerText;
+
     let text, time, sender, receiver, read, id;
     [text, time, sender, receiver, read, id] = data;
+
     let newChatBubbleWrapper = document.createElement("div");
     newChatBubbleWrapper.classList.add("chatBubbleWrapper");
+
     let newChatBubble = document.createElement("div");
     newChatBubble.classList.add("chatBubble");
-    newChatBubble.id = `${id}`;
-    newTime = document.createElement("div");
+    newChatBubble.id = id;
+
+    let newMessageInfoWrapper = document.createElement("div");
+    newMessageInfoWrapper.classList.add("messageInfoWrapper");
+
+    let newMessageInfo = document.createElement("span");
+    newMessageInfo.classList.add("messageInfo");
+
+    let newTime = document.createElement("div");
     newTime.innerText = time;
     newTime.classList.add("datetime");
+
+    let newInfo = document.createElement("div");
+    newInfo.id = id;
+    newInfo.classList.add("info");
+    newInfo.innerText = "i";
+    newInfo.onclick = () => infoButton(newInfo.id);
+
     if (receiver == chatName){
         newChatBubble.classList.add("rightChat");
-        newTime.style.textAlign= "right";
+
+        newMessageInfoWrapper.classList.add("messageInfoRight");
+
+        newMessageInfo.appendChild(newTime);
+        newMessageInfo.appendChild(newInfo);
     } else{
         const isRead = (read)? "True" : "False";
         newChatBubble.classList.add(isRead);
+
+        newMessageInfo.appendChild(newInfo);
+
+        newMessageInfo.appendChild(newTime);
     }
+
     newChatBubble.innerText = text;
+    $(newChatBubble).linkify();
+
     newChatBubbleWrapper.appendChild(newChatBubble);
+    newMessageInfoWrapper.appendChild(newMessageInfo);
+
     checkRead();
+
     document.querySelector(".chatBrowser").appendChild(newChatBubbleWrapper);
-    document.querySelector(".chatBrowser").appendChild(newTime);
+    document.querySelector(".chatBrowser").appendChild(newMessageInfoWrapper);
 }
 function fetchChat(id){
     $.ajax({
@@ -146,16 +182,21 @@ function chatIsScrolledBottom(){
     return browser.scrollHeight - $browser.scrollTop() - $browser.outerHeight() < 1;
 }
 document.querySelector(".newChat").onclick = function(){
-    document.querySelector(".modal").style.display = "flex";
+    document.querySelector(".newChatModal").style.display = "flex";
 }
-document.querySelector(".modalContent span").onclick = function(){
-    document.querySelector(".modal").style.display = "none";
-}
+document.querySelectorAll(".modalContent span").forEach(modal => {
+    modal.onclick = function(){
+        document.querySelectorAll(".modal").forEach(modal => {modal.style.display = "none";});
+    };
+});
 window.onclick = function(event) {
-    let modal = document.querySelector(".modal")
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
+    let modals = document.querySelectorAll(".modal")
+    modals.forEach(modal => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+    
 }
 function searchNewChats(){
     const queryText = document.querySelector("#addChat").value;
@@ -182,5 +223,33 @@ function addNewChat(chatName){
     document.querySelector(".modal").style.display = "none";
     putChatFront(chatName);
     fetchChats(chatName);
-}
+};
+function infoButton(id){
+    document.querySelector(".infoModal").style.display = "flex";
+    $.ajax({
+        url: '/ajax/getchatinfo/',
+        data: {
+          'id':id
+        },
+        dataType: 'json',
+        success: function (data) {
+            parent = document.querySelector(".infoBrowser ul");
+            parent.innerHTML = "";
+
+            sentOn = document.createElement("li");
+            sentOn.innerText = "Sent On : " + data.sent_on;
+            parent.appendChild(sentOn);
+
+            read = document.createElement("li");
+            read.innerText = (data.read)? ("Message Read on " + data.read_on):("Message Not Read");
+            parent.appendChild(read);
+        }
+    });
+};
+document.querySelectorAll(".info").forEach(elem=>{
+    elem.onclick = () => infoButton(elem.id);
+});
 scrollChatToBottom();
+$(function(){
+    $('pre').linkify();
+});

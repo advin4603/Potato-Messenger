@@ -8,9 +8,9 @@ onlineSocket.onmessage = function(e){
     const data = JSON.parse(e.data);
     let isOnline = data.is_online;
     if (isOnline){
-        document.querySelector(".isOnline").innerText = "Online";
+        document.querySelector(".isOnline").id = "Online";
     } else{
-        document.querySelector(".isOnline").innerText = "Offline";
+        document.querySelector(".isOnline").id = "Offline";
     }
 }
 function changeOnline(newOnline){

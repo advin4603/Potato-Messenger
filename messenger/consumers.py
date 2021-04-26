@@ -1,6 +1,7 @@
 import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
+from django.contrib.auth.models import User
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -19,20 +20,23 @@ class ChatConsumer(WebsocketConsumer):
         )
 
         
-
-        # Declare user is online
-        async_to_sync(self.channel_layer.group_send)(
-                self.online_listening_group_name,
-                {
-                    "online":True,
-                    "type":'online_change'
-                }
-            )
+        
+        if self.scope['user'].profile.show_online:
+            # Declare user is online
+            async_to_sync(self.channel_layer.group_send)(
+                    self.online_listening_group_name,
+                    {
+                        "online":True,
+                        "type":'online_change'
+                    }
+                )
+            self.scope['user'].profile.online = True
+            self.scope['user'].profile.save(update_fields=["online"])
 
         self.accept()
-        self.scope['user'].profile.online = True
+        
 
-        self.scope['user'].profile.save()
+        
 
     def disconnect(self, close_code):
         # Declare user is offline
@@ -57,7 +61,7 @@ class ChatConsumer(WebsocketConsumer):
             self.channel_name
         )
         self.scope['user'].profile.online = False
-        self.scope['user'].profile.save()
+        self.scope['user'].profile.save(update_fields=["online"])
 
     # Receive message from new message group
     def chat_message(self, event):
@@ -92,7 +96,7 @@ class OnlineUserConsumer(WebsocketConsumer):
             "online_%s" % self.online_listening,
             self.channel_name
         )
-    
+
     def online_change(self, event):
         is_online = event["online"]
 

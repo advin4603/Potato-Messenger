@@ -16,8 +16,8 @@
 {% endblock links %}
 
 {% block main %}
-    <div class="modal">
-        <div class="modalContent">
+    <div class="modal newChatModal">
+        <div class="modalContent newChatModalContent">
             <span>X</span>
             <h1>Add New Chats</h1>
             <div class="inputWrapper">
@@ -25,6 +25,16 @@
             </div>
             <div class="newChatNameBrowser">
             </div>
+        </div>
+    </div>
+    <div class="modal infoModal">
+        <div class="modalContent infoModalContent">
+            <span>X</span>
+            <h1>Message Info</h1>
+            <div class="infoBrowser">
+                <ul></ul>
+            </div>
+            
         </div>
     </div>
     <div class="leftWrapper">
@@ -45,8 +55,8 @@
     <div class="rightWrapper">
         <div class="right">
             <div class="chatNameWrapper">
-                
-                <div class="chatName">{{ chats.0 }}</div>&nbsp;:&nbsp;<div class="isOnline">{{ online }}</div>
+                <input type="hidden" id="accountUrl" value="{% url 'messenger:account' %}">
+                <div class="chatName">{{ chats.0 }}</div>&nbsp;&nbsp;<div class="isOnline" id="{{ online }}"></div>
             </div>
             <div class="chatBrowserWrapper">
                 <div class="chatBrowser">
@@ -57,12 +67,28 @@
                             </div>
                         </div>
                         {% if message.sender == request.user %}
-                            <div style="text-align: right" class="datetime">
-                                {{ message.time|naturaltime }}
+                            <div class="messageInfoWrapper  messageInfoRight">
+                                <span class="messageInfo">
+                                    
+                                    <div class="datetime">
+                                        {{ message.time|date:"D d M Y" }} {{ message.time|time:"g:i A" }}
+                                    </div>
+                                    <div class="info" id="{{ message.id }}">
+                                        i
+                                    </div>
+                                </span>
                             </div>
                         {% else %}
-                            <div class="datetime">
-                                {{ message.time|naturaltime }}
+                            <div class="messageInfoWrapper">
+                                <span class="messageInfo">
+                                    <div class="info" id="{{ message.id }}">
+                                        i
+                                    </div>
+                                    <div class="datetime">
+                                        {{ message.time|date:"D d M Y" }} {{ message.time|time:"g:i A" }}
+                                    </div>
+                                    
+                                </span>
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -84,4 +110,6 @@
     <script src="{% static 'messenger/chatSocketManager.js' %}"></script>
     <script src="{% static 'messenger/chatReader.js' %}"></script>
     <script src="{% static 'messenger/onlineSocketManager.js' %}"></script>
+    <script src="{% static 'messenger/linkifyjs/linkify.min.js' %}"></script>
+    <script src="{% static 'messenger/linkifyjs/linkify-jquery.min.js' %}"></script>
 {% endblock scripts %}

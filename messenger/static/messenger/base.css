@@ -24,7 +24,7 @@ ul{
     display: flex;
 }
 .links ul li{
-    margin-left: 10vw;
+    margin-left: 2.5vw;
 }
 .links ul li a{
     padding: 2vh 2vw;
@@ -61,7 +61,7 @@ main{
 .dropDownLinks{
     display: none;
 }
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 690px) {
     .links{
         display: none;
     }

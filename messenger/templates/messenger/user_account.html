@@ -1,0 +1,44 @@
+{% extends 'messenger/base.html' %}
+{% load static %}
+
+{% block title %}
+    Account
+{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'messenger/account.css' %}">
+
+{% endblock head %}
+
+{% block links %}
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'messenger:account' %}">Account</a></li>
+        <li><a href="{% url 'messenger:chatpage' %}">Chats</a></li>
+        <li><a href="{% url 'messenger:logout' %}">Logout</a></li>
+    {% else %}
+        <li><a href="{% url 'messenger:login' %}">Login</a></li>
+        <li><a href="{% url 'messenger:signup' %}">Sign Up</a></li>
+    {% endif %}
+{% endblock links %}
+
+{% block main %}
+    <div class="contentWrapper">
+        <div class="content">
+            <h1>
+                Account Details
+            </h1>
+            <ul id="details">
+                {% if profile.visible %}
+                    <li>Username : {{user.username}}</li>
+                    <li>Email :&nbsp;<span>{{user.email}}</span></li>
+                    <li>First Name :&nbsp;<span>{{user.first_name}}</span></li>
+                    <li>Last Name :&nbsp;<span>{{user.last_name}}</span></li>
+                    <li>Status :&nbsp;<span>{{profile.status}}</span></li>
+                    <li>Birth Date :&nbsp;<span> {{profile.birth_date|date:"D d M Y" }}</span></li>
+                {% else %}
+                    <li>Hidden</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock main %}
