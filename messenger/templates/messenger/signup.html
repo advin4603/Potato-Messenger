@@ -2,126 +2,126 @@
 {% load static %}
 
 {% block title %}
-    Sign Up
+Sign Up
 {% endblock title %}
 
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'messenger/auth.css' %}">
-    <link  href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'messenger/profilePic.css' %}">
+<link rel="stylesheet" href="{% static 'messenger/auth.css' %}">
+<link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'messenger/profilePic.css' %}">
 {% endblock head %}
 
 
 {% block links %}
-    <li><a href="{% url 'messenger:login' %}">Login</a></li>
+<li><a href="{% url 'messenger:login' %}">Login</a></li>
 {% endblock links %}
-    
+
 
 {% block main %}
-    <!-- MODAL TO CROP THE IMAGE -->
-    <div class="modal cropModal closeModal">
-        <div class="modalContent cropModalContent">
-            <span class="closeCropModal">&times;</span>
-            <h1>Profile Picture</h1>
-            <div class="imageWrapper">
-                <img src="" id="image" style="max-width: 100%;max-height: 50vh;">
-            </div>
-            <div class="modalFooter">
-                <div class="leftButtons">
-                  <button class="zoomIn">
-                      +
-                  </button>
-                  <button class="zoomOut">
+<!-- MODAL TO CROP THE IMAGE -->
+<div class="modal cropModal closeModal">
+    <div class="modalContent cropModalContent">
+        <span class="closeCropModal">&times;</span>
+        <h1>Profile Picture</h1>
+        <div class="imageWrapper">
+            <img src="" id="image" style="max-width: 100%;max-height: 50vh;">
+        </div>
+        <div class="modalFooter">
+            <div class="leftButtons">
+                <button class="zoomIn">
+                    +
+                </button>
+                <button class="zoomOut">
                     -
-                  </button>
-                </div>
-                <div class="rightButtons">
-                    <button type="button" class="cancel">Nevermind</button>
-                    <button type="button" class="cropAndUpload">Crop and upload</button>
-                </div>
+                </button>
+            </div>
+            <div class="rightButtons">
+                <button type="button" class="cancel">Nevermind</button>
+                <button type="button" class="cropAndUpload">Crop and upload</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="contentWrapper">
-        <div class="content">
-            <h1>
-                Sign Up
-            </h1>
-            <div class="formWrapper">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
+<div class="contentWrapper">
+    <div class="content">
+        <h1>
+            Sign Up
+        </h1>
+        <div class="formWrapper">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
 
-                    {% if form_1.non_field_errors %}
-                        <div class="errorWrapper bottomMargin">
-                            {{ form_1.non_field_errors }}
-                        </div>
-                    {% endif %}
+                {% if form_1.non_field_errors %}
+                <div class="errorWrapper bottomMargin">
+                    {{ form_1.non_field_errors }}
+                </div>
+                {% endif %}
 
-                    {% if form_2.non_field_errors %}
-                        <div class="errorWrapper bottomMargin">
-                            {{ form_2.non_field_errors }}
-                        </div>
-                    {% endif %}
+                {% if form_2.non_field_errors %}
+                <div class="errorWrapper bottomMargin">
+                    {{ form_2.non_field_errors }}
+                </div>
+                {% endif %}
 
-                    {% if photo_form.non_field_errors %}
-                        <div class="errorWrapper bottomMargin">
-                            {{ photo_form.non_field_errors }}
-                        </div>
-                    {% endif %}
-                    
-                    <div class="errorWrapper">
-                        {{ photo_form.profile_picture.errors }}
+                {% if photo_form.non_field_errors %}
+                <div class="errorWrapper bottomMargin">
+                    {{ photo_form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <div class="errorWrapper">
+                    {{ photo_form.profile_picture.errors }}
+                </div>
+                <div class="croppedDisplayPicWrapper hide">
+                    <div class="croppedDisplayPic">
                     </div>
-                    <div class="croppedDisplayPicWrapper hide">
-                        <div class="croppedDisplayPic">
-                        </div>
-                    </div>
-                    
+                </div>
 
-                    <label for="id_profile_picture" class="fileUploadLabel">
-                        <div class="fileUploadBox">Upload Profile Picture</div>
-                        {% for field in photo_form %}
-                            {{ field }}
-                        {% endfor %}
-                    </label>
-                    
-                    {% for field in form_1 %}
-                        <div class="errorWrapper">
-                            {{ field.errors }}
-                        </div>
-                        <div class="fieldWrapper">
-                            <div class="labelWrapper">
-                                {{ field.label_tag }}
-                            </div>
-                            <div class="inputWrapper">
-                                {{ field }}
-                            </div>
-                        </div>
+
+                <label for="id_profile_picture" class="fileUploadLabel">
+                    <div class="fileUploadBox">Upload Profile Picture</div>
+                    {% for field in photo_form %}
+                    {{ field }}
                     {% endfor %}
-                    {% for field in form_2 %}
-                        <div class="errorWrapper">
-                            {{ field.errors }}
-                        </div>
-                        <div class="fieldWrapper">
-                            <div class="labelWrapper">
-                                {{ field.label_tag }}
-                            </div>
-                            <div class="inputWrapper">
-                                {{ field }}
-                            </div>
-                        </div>
-                    {% endfor %}
-                    
-                    <div class="submitWrapper">
-                        <input type="submit" value="Submit">
+                </label>
+
+                {% for field in form_1 %}
+                <div class="errorWrapper">
+                    {{ field.errors }}
+                </div>
+                <div class="fieldWrapper">
+                    <div class="labelWrapper">
+                        {{ field.label_tag }}
                     </div>
-                </form>
-            </div>
+                    <div class="inputWrapper">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% for field in form_2 %}
+                <div class="errorWrapper">
+                    {{ field.errors }}
+                </div>
+                <div class="fieldWrapper">
+                    <div class="labelWrapper">
+                        {{ field.label_tag }}
+                    </div>
+                    <div class="inputWrapper">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="submitWrapper">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
         </div>
     </div>
+</div>
 {% endblock main %}
 {% block scripts %}
-    <script src="{% static 'messenger/profilePic.js' %}"></script>
+<script src="{% static 'messenger/profilePic.js' %}"></script>
 {% endblock scripts %}

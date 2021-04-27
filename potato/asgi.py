@@ -7,11 +7,11 @@ import messenger.routing
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "potato.settings")
 
-application = ProtocolTypeRouter({
-  "http": get_asgi_application(),
-  "websocket": AuthMiddlewareStack(
-        URLRouter(
-            messenger.routing.websocket_urlpatterns
-        )
-    ),
-})
+application = ProtocolTypeRouter(
+    {
+        "http": get_asgi_application(),
+        "websocket": AuthMiddlewareStack(
+            URLRouter(messenger.routing.websocket_urlpatterns)
+        ),
+    }
+)

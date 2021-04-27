@@ -1,157 +1,175 @@
-.content{
-    background-color: var(--dark-color);
-    color:var(--light-color);
-    padding:50px 10vw;
-}
-ul{
-    list-style-type: none;
-}
-h1{
-    font-size:40px;
-    margin-bottom: 80px;
-}
-.contentWrapper{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 80px;
-}
-.content li{
-    margin: 50px 0;
-    display: flex;
-    align-items: center;
+.content {
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  padding: 50px 10vw;
 }
 
-
-.editButton{
-    display: inline;
-    cursor: pointer;
-    content: url('images/editLogoLight.svg');
-    height: 30px;
-    padding: 2px ;
-    margin-left: auto;
-    order: 2;
-    transition: all 250ms;
-}
-.editButton:hover{
-    content: url('images/editLogoDark.svg');
-    background-color:var(--light-color);
-    
-}
-.editForm{
-    display: flex;
-    margin-bottom: 50px;
-    width: 100%;
-    margin: auto;
-    align-items: center;
-}
-.editForm input{
-    width: 95%;
-    background-color: var(--dark-color);
-    color: var(--light-color);
-    border: solid;
-    transition: all 250ms;
-    margin: 0 5px;
-    cursor: text;
-    padding: 0 5px;
-    height: 30px;
-}
-input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, input[type=date]:focus, .editSubmit:hover{
-    background-color: var(--light-color);
-    color: var(--dark-color);
-    border: solid;
-    outline: rgb(255, 210, 173) solid 2px;
-    border-radius: 0px;
-}
-input[type=date]::-webkit-calendar-picker-indicator { 
-    background-image: url('images/calendar.png');
-    cursor: pointer;
-}
-input[type=date]:focus::-webkit-calendar-picker-indicator { 
-    background-image: url('images/calendarFocus.png');
-}
-.editSubmit{   
-    text-align: center;
-    height: 30px;
-    padding: 2px;
-    border: solid;
-    cursor: pointer;
-    transition: all 250ms;
-}
-.crossed{
-    content: url('images/cross.png');
-}
-.crossed:hover{
-    content: url('images/crossFocus.png');
-}
-.ticked{
-    content: url('images/tick.png');
-}
-.ticked:hover{
-    content: url('images/tickFocus.png');
+ul {
+  list-style-type: none;
 }
 
-input[type=checkbox] {
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
+h1 {
+  font-size: 40px;
+  margin-bottom: 80px;
+}
+
+.contentWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+}
+
+.content li {
+  margin: 50px 0;
+  display: flex;
+  align-items: center;
+}
+
+.editButton {
+  display: inline;
+  cursor: pointer;
+  content: url("images/editLogoLight.svg");
+  height: 30px;
+  padding: 2px;
+  margin-left: auto;
+  order: 2;
+  transition: all 250ms;
+}
+
+.editButton:hover {
+  content: url("images/editLogoDark.svg");
+  background-color: var(--light-color);
+}
+
+.editForm {
+  display: flex;
+  margin-bottom: 50px;
+  width: 100%;
+  margin: auto;
+  align-items: center;
+}
+
+.editForm input {
+  width: 95%;
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  border: solid;
+  transition: all 250ms;
+  margin: 0 5px;
+  cursor: text;
+  padding: 0 5px;
+  height: 30px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+.editSubmit:hover {
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  border: solid;
+  outline: rgb(255, 210, 173) solid 2px;
+  border-radius: 0px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-image: url("images/calendar.png");
+  cursor: pointer;
+}
+
+input[type="date"]:focus::-webkit-calendar-picker-indicator {
+  background-image: url("images/calendarFocus.png");
+}
+
+.editSubmit {
+  text-align: center;
+  height: 30px;
+  padding: 2px;
+  border: solid;
+  cursor: pointer;
+  transition: all 250ms;
+}
+
+.crossed {
+  content: url("images/cross.png");
+}
+
+.crossed:hover {
+  content: url("images/crossFocus.png");
+}
+
+.ticked {
+  content: url("images/tick.png");
+}
+
+.ticked:hover {
+  content: url("images/tickFocus.png");
+}
+
+input[type="checkbox"] {
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
 }
 
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-    margin-left: auto;
-    order: 2;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-left: auto;
+  order: 2;
 }
-  
-.switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
-  
+
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--dark-color);
-    -webkit-transition: .4s;
-    transition: .4s;
-    outline:rgb(255, 210, 173) solid; 
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--dark-color);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  outline: rgb(255, 210, 173) solid;
 }
-  
+
 .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: var(--light-color);
-    outline:rgb(32, 32, 32) solid; 
-    -webkit-transition: .4s;
-    transition: .4s;
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--light-color);
+  outline: rgb(32, 32, 32) solid;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
-input:checked + .slider:before{
-    background-color: var(--dark-color);
-    outline:rgb(255, 210, 173) solid; 
+
+input:checked+.slider:before {
+  background-color: var(--dark-color);
+  outline: rgb(255, 210, 173) solid;
 }
-input:checked + .slider {
-    background-color: var(--light-color);
-    
+
+input:checked+.slider {
+  background-color: var(--light-color);
 }
-  
-input:focus + .slider {
-    box-shadow: 0 0 1px var(--light-color);
+
+input:focus+.slider {
+  box-shadow: 0 0 1px var(--light-color);
 }
-  
-input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }

@@ -1,88 +1,108 @@
 .modal {
-    display: flex; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 2; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
-    justify-content: center;
-    align-items: center;
-    
+  display: flex;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 2;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.8);
+  /* Black w/ opacity */
+  justify-content: center;
+  align-items: center;
 }
+
 .modalContent {
-    position: relative;
-    color:var(--light-color); ;
-    background-color: var(--dark-color);
-    margin: auto;
-    border: solid;
-    width: 50%;
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s;
-    height: 80vh;
+  position: relative;
+  color: var(--light-color);
+  background-color: var(--dark-color);
+  margin: auto;
+  border: solid;
+  width: 50%;
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  height: 80vh;
 }
-.closeCropModal{
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    border: solid;
-    padding: 4px;
-    transition: all 0.2s;
-    cursor: pointer;
+
+.closeCropModal {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  border: solid;
+  padding: 4px;
+  transition: all 0.2s;
+  cursor: pointer;
 }
-.modalContent h1{
-    width: 50%;
-    margin: auto;
-    border: solid;
-    text-align: center;
-    margin-top: 15px;
-    margin-bottom: 30px;
+
+.modalContent h1 {
+  width: 50%;
+  margin: auto;
+  border: solid;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 30px;
 }
-.modalFooter{
-    display: flex;
-    
-    width: 80%;
-    margin: auto;
-    margin-top: 30px;
+
+.modalFooter {
+  display: flex;
+
+  width: 80%;
+  margin: auto;
+  margin-top: 30px;
 }
-.imageWrapper{
-    margin:auto;
-    width: 80%;
-    
+
+.imageWrapper {
+  margin: auto;
+  width: 80%;
 }
-.cropper-container{
-    border: solid;
+
+.cropper-container {
+  border: solid;
 }
-.cropper-line, .cropper-point {
-    background-color: var(--light-color);
+
+.cropper-line,
+.cropper-point {
+  background-color: var(--light-color);
 }
+
 .cropper-view-box {
-    outline: 1px solid var(--light-color);
+  outline: 1px solid var(--light-color);
 }
-button{
-    background-color: var(--dark-color);
-    color: var(--light-color);
-    border: solid;
-    transition: all 0.2s;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
+
+button {
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  border: solid;
+  transition: all 0.2s;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
 }
-button:hover, .closeCropModal:hover{
-    background-color: var(--light-color);
-    color: var(--dark-color);
-    border-radius: 0;
-    outline:var(--light-color) solid 2px;
+
+button:hover,
+.closeCropModal:hover {
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  border-radius: 0;
+  outline: var(--light-color) solid 2px;
 }
-.rightButtons{
-    margin-left: auto;
-    order: 2;
+
+.rightButtons {
+  margin-left: auto;
+  order: 2;
 }
-.closeModal{
-    display: none;
+
+.closeModal {
+  display: none;
 }

@@ -15,10 +15,13 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True)
     read_receipts = models.BooleanField(default=True)
     online = models.BooleanField(default=False)
-    profile_picture = models.ImageField(default='default_pic.png', upload_to='profile_pictures')
+    profile_picture = models.ImageField(
+        default="default_pic.png", upload_to="profile_pictures"
+    )
 
     def __str__(self):
         return self.user.username
+
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
@@ -34,25 +37,29 @@ def save_profile(sender, instance, **kwargs):
 class Message(models.Model):
     text = models.TextField()
     time = models.DateTimeField()
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='sent_messages')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='received_messages')
-    reply_to = models.ForeignKey('self', default=None, on_delete=models.SET_NULL, null=True, blank=True)
+    sender = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, related_name="sent_messages"
+    )
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, related_name="received_messages"
+    )
+    reply_to = models.ForeignKey(
+        "self", default=None, on_delete=models.SET_NULL, null=True, blank=True
+    )
     read = models.BooleanField(default=False)
     read_on = models.DateTimeField(null=True, default=None, blank=True)
 
+
 @receiver(post_save, sender=Message)
-def notify_receiver(sender, instance:Message, created, **kwargs):
+def notify_receiver(sender, instance: Message, created, **kwargs):
     if created:
         if instance.receiver.profile.online:
             channel_layer = get_channel_layer()
             async_to_sync(channel_layer.group_send)(
                 "chat_%s" % instance.receiver.username,
                 {
-                    "chat_name":instance.sender.username,
-                    "id":instance.id,
-                    "type":'chat_message'
-
-                }
+                    "chat_name": instance.sender.username,
+                    "id": instance.id,
+                    "type": "chat_message",
+                },
             )
-
-

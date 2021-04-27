@@ -11,6 +11,8 @@ channels = "^3.0.3"
 Pillow = "^8.2.0"
 
 [tool.poetry.dev-dependencies]
+flake8 = "^3.9.1"
+black = "^21.4b0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
