@@ -20,7 +20,7 @@
 
 {% block main %}
     <!-- MODAL TO CROP THE IMAGE -->
-    <div class="modal cropModal">
+    <div class="modal cropModal closeModal">
         <div class="modalContent cropModalContent">
             <span class="closeCropModal">&times;</span>
             <h1>Profile Picture</h1>
@@ -52,29 +52,40 @@
             <div class="formWrapper">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="errorWrapper bottomMargin">
-                        {{ form_1.non_field_errors }}
-                    </div>
-                    <div class="errorWrapper bottomMargin">
-                        {{ form_2.non_field_errors }}
-                    </div>
-                    <div class="errorWrapper bottomMargin">
-                        {{ photo_form.non_field_errors }}
-                    </div>
+
+                    {% if form_1.non_field_errors %}
+                        <div class="errorWrapper bottomMargin">
+                            {{ form_1.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    {% if form_2.non_field_errors %}
+                        <div class="errorWrapper bottomMargin">
+                            {{ form_2.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    {% if photo_form.non_field_errors %}
+                        <div class="errorWrapper bottomMargin">
+                            {{ photo_form.non_field_errors }}
+                        </div>
+                    {% endif %}
                     
                     <div class="errorWrapper">
                         {{ photo_form.profile_picture.errors }}
                     </div>
-                    <div class="fieldWrapper">
-                        <div class="labelWrapper">
-                            {{ photo_form.profile_picture.label_tag }}
+                    <div class="croppedDisplayPicWrapper hide">
+                        <div class="croppedDisplayPic">
                         </div>
-                        {% for field in photo_form %}
-                        <div class="inputWrapper">
-                            {{ field }}
-                        </div>
-                        {% endfor %}
                     </div>
+                    
+
+                    <label for="id_profile_picture" class="fileUploadLabel">
+                        <div class="fileUploadBox">Upload Profile Picture</div>
+                        {% for field in photo_form %}
+                            {{ field }}
+                        {% endfor %}
+                    </label>
                     
                     {% for field in form_1 %}
                         <div class="errorWrapper">

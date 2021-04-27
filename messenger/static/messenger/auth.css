@@ -17,7 +17,7 @@ input[type=text], input{
     padding: 10px;
     cursor: text;
 }
-input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, input[type=date]:focus, input[type=submit]:hover{
+input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, input[type=date]:focus, input[type=submit]:hover, .fileUploadLabel:hover{
     background-color: var(--light-color);
     color: var(--dark-color);
     border: solid;
@@ -31,12 +31,46 @@ input[type=date]::-webkit-calendar-picker-indicator {
 input[type=date]:focus::-webkit-calendar-picker-indicator { 
     background-image: url('images/calendarFocus.png');
 }
+input[type=file]{
+    opacity: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    padding: 30px;
+}
+.fileUploadBox{
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+    height: 100%;
+    padding: 30px;
+}
+.fileUploadLabel{
+    margin: 70px;
+    margin-top:20px;
+    border: solid;
+    display: grid;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.fileUploadLabel > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
 input[type=submit]{
     height: 40px;
     width: 20%;
     font-weight: 700;
     text-align: center;
     cursor: pointer;
+}
+.dragover{
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    border: dashed;
+    outline: rgb(255, 210, 173) solid 2px;
+    border-radius: 0px;
 }
 form{
     width: 50vw;
@@ -96,6 +130,21 @@ ul{
 }
 .bottomMargin{
     margin: 30px;
+}
+.croppedDisplayPic{
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    display: block;
+    border: solid;
+}
+.croppedDisplayPicWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hide{
+    display: none;
 }
 @media only screen and (max-width: 870px) {
     form{

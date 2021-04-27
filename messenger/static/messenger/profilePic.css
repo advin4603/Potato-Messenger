@@ -1,5 +1,5 @@
 .modal {
-    display: none; /* Hidden by default */
+    display: flex; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 2; /* Sit on top */
     left: 0;
@@ -82,4 +82,7 @@ button:hover, .closeCropModal:hover{
 .rightButtons{
     margin-left: auto;
     order: 2;
+}
+.closeModal{
+    display: none;
 }
