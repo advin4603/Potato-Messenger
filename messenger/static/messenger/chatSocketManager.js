@@ -10,30 +10,43 @@ chatSocket.onmessage = function (e) {
   if (!data.chat_name.startsWith(inputText)) {
     return;
   }
-  putChatFront(data.chat_name);
-  if (data.chat_name == currentChatName) {
-    if (chatIsScrolledBottom()) {
-      fetchChat(data.id);
-      scrollChatSmoothToBottom();
-    } else {
-      fetchChat(data.id);
-      incrementUnread(currentChatName);
+  $.ajax({
+    url: "/ajax/getprofilepicurl/",
+    data: {"username":data.chat_name},
+    dataType: "json",
+    success: function (response) {
+      putChatFront(data.chat_name, response.url);
+      if (data.chat_name == currentChatName) {
+        if (chatIsScrolledBottom()) {
+          fetchChat(data.id);
+          scrollChatSmoothToBottom();
+        } else {
+          fetchChat(data.id);
+          incrementUnread(currentChatName);
+        }
+      } else {
+        incrementUnread(data.chat_name);
+      }
+      
     }
-  } else {
-    incrementUnread(data.chat_name);
-  }
+  });
+  
 };
-function putChatFront(chatName) {
+function putChatFront(chatName, profilePicUrl) {
   let chat_name = document.getElementById(chatName);
   let new_chat_name;
   if (chat_name) {
     new_chat_name = chat_name.cloneNode(true);
     chat_name.parentNode.removeChild(chat_name);
   } else {
+    newImg = document.createElement("img");
+    newImg.src = profilePicUrl;
+    newImg.classList.add("profilePic");
     new_chat_name = document.createElement("div");
     new_chat_name.innerText = chatName;
     new_chat_name.id = chatName;
     new_chat_name.classList.add("chat");
+    new_chat_name.appendChild(newImg);
     new_chat_name.onclick = () => fetchChats(chatName);
   }
   insertAfter(document.querySelector(".search"), new_chat_name);

@@ -57,7 +57,7 @@
       <img src="{{ chats.0.profile.profile_picture.url }}" class="profilePic">
       <div class="chatName">{{ chats.0 }}</div>
       &nbsp;&nbsp;
-      <div class="isOnline" id="{{ online }}"></div>
+      <div class="isOnline" id="{% if chats %}{{ online }}{% endif %}"></div>
     </div>
     <div class="chatBrowserWrapper">
       <div class="chatBrowser">

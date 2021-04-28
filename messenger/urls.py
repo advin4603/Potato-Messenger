@@ -22,5 +22,8 @@ urlpatterns = [
     path("ajax/setread/", views.set_read, name="set_read"),
     path("ajax/getchatinfo/", views.get_chat_info, name="get_chat_info"),
     path("ajax/profilepicchange/", views.profile_pic_change, name="profile_pic_change"),
+    path(
+        "ajax/getprofilepicurl/", views.get_profile_pic_url, name="get_profile_pic_url"
+    ),
     path("empty/", views.empty, name="empty"),
 ]

@@ -214,10 +214,12 @@ def chatpage(request):
     chat_list = get_chat_list(request.user)
     if chat_list:
         chat_messages = get_chat_messages(request.user, chat_list[0])
+        other_user = User.objects.get(username=chat_list[0]).profile
+        online = other_user.online if other_user.show_online else False
     else:
         chat_messages = []
-    other_user = User.objects.get(username=chat_list[0]).profile
-    online = other_user.online if other_user.show_online else False
+        online = False
+
     return render(
         request,
         "messenger/chatpage.html",
@@ -226,6 +228,13 @@ def chatpage(request):
             "messages": chat_messages,
             "online": "Online" if online else "Offline",
         },
+    )
+
+
+def get_profile_pic_url(request):
+    username = request.GET.get("username", None)
+    return JsonResponse(
+        {"url": User.objects.get(username=username).profile.profile_picture.url}
     )
 
 
