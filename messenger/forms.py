@@ -34,9 +34,9 @@ class ProfileForm(forms.ModelForm):
 
 
 class PhotoForm(forms.ModelForm):
-    x = forms.FloatField(widget=forms.HiddenInput())
-    y = forms.FloatField(widget=forms.HiddenInput())
-    length = forms.FloatField(widget=forms.HiddenInput())
+    x = forms.FloatField(widget=forms.HiddenInput(), required=False)
+    y = forms.FloatField(widget=forms.HiddenInput(), required=False)
+    length = forms.FloatField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Profile
@@ -47,10 +47,13 @@ class PhotoForm(forms.ModelForm):
 
         x = self.cleaned_data.get("x")
         y = self.cleaned_data.get("y")
-        l = self.cleaned_data.get("length")
+        length = self.cleaned_data.get("length")
+
+        if None in (x, y, length):
+            return profile
 
         image = Image.open(profile.profile_picture)
-        cropped_image = image.crop((x, y, l + x, l + y))
+        cropped_image = image.crop((x, y, length + x, length + y))
         resized_image = cropped_image.resize(
             settings.PROFILE_CROP_SIZE, Image.ANTIALIAS
         )

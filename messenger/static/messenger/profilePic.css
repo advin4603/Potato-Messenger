@@ -106,3 +106,12 @@ button:hover,
 .closeModal {
   display: none;
 }
+
+.zoomIn,
+.zoomOut {
+  margin: 0;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+}

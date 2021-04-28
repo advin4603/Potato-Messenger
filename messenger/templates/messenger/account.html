@@ -7,6 +7,8 @@ Account
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'messenger/account.css' %}" />
+<link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'messenger/profilePic.css' %}">
 {% endblock head %}
 
 {% block links %}
@@ -15,11 +17,51 @@ Account
 {% endblock links %}
 
 {% block main %}
+
+<!-- MODAL TO CROP THE IMAGE -->
+<div class="modal cropModal closeModal">
+  <div class="modalContent cropModalContent">
+    <span class="closeCropModal">&times;</span>
+    <h1>Profile Picture</h1>
+    <div class="imageWrapper">
+      <img src="" id="image" style="max-width: 100%;max-height: 50vh;">
+    </div>
+    <div class="modalFooter">
+      <div class="leftButtons">
+        <button class="zoomIn">
+          +
+        </button>
+        <button class="zoomOut">
+          -
+        </button>
+      </div>
+      <div class="rightButtons">
+        <button type="button" class="cancel">Nevermind</button>
+        <button type="button" class="cropAndUpload">Crop and upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="contentWrapper">
   <div class="content">
     <h1>Account Details</h1>
     <ul id="details">
       <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+
+      <li id="profile_picture" class="editable">
+        <div class="profilePictureWrapper">
+          <img src="{{ profile_picture.url }}" class="imageDisplay">
+        </div>
+        <div class="editButton" onclick="newProfile()"></div>
+      </li>
+      <form method="post" enctype="multipart/form-data" class="hiddenPicForm"
+        submit-url="{% url 'messenger:profile_pic_change' %}">
+        {% csrf_token %}
+        {{ photo_form }}
+        <input type="submit" value="Submit" class="hiddenSubmit">
+      </form>
+
       <li>Username : {{username}}</li>
       <li id="email" class="editable">
         Email :&nbsp;<span>{{email}}</span>

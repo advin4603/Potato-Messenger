@@ -80,7 +80,7 @@ def changefield(request):
             try:
                 setattr(request.user.profile, field, value)
                 request.user.save()
-            except:
+            except AttributeError:
                 data = {"success": False}
                 return JsonResponse(data)
         data = {"success": True}
@@ -108,7 +108,7 @@ def get_chat_name(request):
     return JsonResponse(
         {
             "chats": [
-                user.username if user == request.user else user.username
+                (user.username, user.profile.profile_picture.url)
                 for user in get_chat_list(request.user, chat_name)
             ]
         }
@@ -278,8 +278,21 @@ def account(request):
         "read_receipts": request.user.profile.read_receipts,
         "show_online": request.user.profile.show_online,
         "visible": request.user.profile.visible,
+        "profile_picture": request.user.profile.profile_picture,
+        "photo_form": PhotoForm(),
     }
     return render(request, "messenger/account.html", user_data)
+
+
+@login_required
+def profile_pic_change(request):
+    if request.method == "POST":
+        form = PhotoForm(request.POST, request.FILES)
+        photo_profile = form.save()
+        request.user.profile.profile_picture = photo_profile.profile_picture
+        photo_profile.delete()
+        request.user.profile.save(update_fields=["profile_picture"])
+    return JsonResponse({"url": request.user.profile.profile_picture.url})
 
 
 def logout(request):

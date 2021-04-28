@@ -43,6 +43,7 @@
     {% for chatname in chats %}
     <div class="chat {% if chatname == chats.0 %}chatFocus{% endif %}" onClick="fetchChats('{{ chatname }}')"
       id="{{ chatname }}">
+      <img src="{{ chatname.profile.profile_picture.url }}" class="profilePic">
       {{ chatname }}
     </div>
     {% endfor %}
@@ -53,6 +54,7 @@
   <div class="right">
     <div class="chatNameWrapper">
       <input type="hidden" id="accountUrl" value="{% url 'messenger:account' %}" />
+      <img src="{{ chats.0.profile.profile_picture.url }}" class="profilePic">
       <div class="chatName">{{ chats.0 }}</div>
       &nbsp;&nbsp;
       <div class="isOnline" id="{{ online }}"></div>

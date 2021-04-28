@@ -261,7 +261,7 @@ pre {
   margin: auto;
   border: solid;
   margin-bottom: 15px;
-  padding: 10px;
+  padding: 7px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -454,4 +454,10 @@ pre {
 
 #Offline {
   content: url("images/Offline.png");
+}
+
+.profilePic {
+  width: 33px;
+  border: solid;
+  margin: 0 10px;
 }

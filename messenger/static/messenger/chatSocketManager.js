@@ -40,8 +40,8 @@ function putChatFront(chatName) {
 }
 function incrementUnread(chatName) {
   let chat = document.getElementById(chatName);
-  if (chat.children.length > 0) {
-    let unreadMessages = chat.children[0];
+  if (chat.children.length > 1) {
+    let unreadMessages = chat.children[1];
     unreadMessages.innerText =
       unreadMessages.innerText == "99+" ||
       Number(unreadMessages.innerText) + 1 > 99
@@ -55,8 +55,8 @@ function incrementUnread(chatName) {
 }
 function removeIncrement(chatName) {
   let chat = document.getElementById(chatName);
-  if (chat.children.length > 0) {
-    let unreadMessages = chat.children[0];
+  if (chat.children.length > 1) {
+    let unreadMessages = chat.children[1];
     unreadMessages.remove();
   }
 }

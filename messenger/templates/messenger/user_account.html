@@ -29,6 +29,9 @@ Account
         </h1>
         <ul id="details">
             {% if profile.visible %}
+            <div class="profilePictureWrapper">
+                <img src="{{ profile.profile_picture.url }}" class="imageDisplay">
+            </div>
             <li>Username : {{user.username}}</li>
             <li>Email :&nbsp;<span>{{user.email}}</span></li>
             <li>First Name :&nbsp;<span>{{user.first_name}}</span></li>

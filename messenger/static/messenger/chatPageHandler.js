@@ -7,7 +7,11 @@ function searchKnownChats() {
     },
     dataType: "json",
     success: function (data) {
+      let unreadCounter = {};
       document.querySelectorAll(".chat").forEach((element) => {
+        if (element.children.length > 1){
+          unreadCounter[element.id] = element.children[1].cloneNode(true);
+        }
         element.parentNode.removeChild(element);
       });
       let chat_list = data["chats"];
@@ -15,13 +19,20 @@ function searchKnownChats() {
       let focussedChat = document.querySelector(".chatName").innerText;
       chat_list.forEach((chatName) => {
         let newElem = document.createElement("div");
-        newElem.innerHTML = chatName;
         newElem.classList.add("chat");
-        if (chatName == focussedChat) {
+        let newImg = document.createElement("img");
+        newImg.src = chatName[1];
+        newImg.classList.add("profilePic");
+        newElem.appendChild(newImg);
+        newElem.innerHTML += chatName[0];
+        if (chatName[0] == focussedChat) {
           newElem.classList.add("chatFocus");
         }
-        newElem.onclick = () => fetchChats(chatName);
-        newElem.id = chatName;
+        newElem.onclick = () => fetchChats(chatName[0]);
+        newElem.id = chatName[0];
+        if (chatName[0] in unreadCounter){
+          newElem.appendChild(unreadCounter[chatName[0]]);
+        }
         parentElement.appendChild(newElem);
       });
     },
@@ -46,6 +57,7 @@ function fetchChats(chatName) {
 
   changeOnline(chatName);
   document.querySelector(".chatName").innerText = chatName;
+  $(".chatNameWrapper .profilePic").attr('src', $(`#${chatName} .profilePic`).attr('src'))
   reloadChatBrowser(chatName);
 }
 function reloadChatBrowser(chatName) {
@@ -62,7 +74,6 @@ function reloadChatBrowser(chatName) {
     dataType: "json",
     success: function (data) {
       let message_list = data["messages"];
-      console.log(data);
       if (data["online"]) {
         document.querySelector(".isOnline").id = "Online";
       } else {
