@@ -115,3 +115,36 @@ button:hover,
   height: 40px;
   text-align: center;
 }
+
+@media only screen and (max-width: 650px) {
+
+  .modalContent {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+
+  .imageWrapper,
+  .modalFooter {
+    width: 95%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .modalFooter {
+    display: block;
+    text-align: center;
+  }
+
+  .leftButtons {
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  .modalContent h1 {
+    font-size: 20px;
+  }
+}

@@ -288,6 +288,7 @@ function openChats(){
   document.querySelector(".leftWrapper").classList.remove("leftClose");
   document.querySelector(".rightWrapper").classList.remove("rightLeftClose");
   document.querySelector(".chatFooterWrapper").classList.remove("inputLeftClose");
+  document.querySelector(".toggleLeft").innerText = "<";
   $(".toggleLeft").click(closeChats);
 }
 
@@ -296,4 +297,5 @@ function closeChats(){
   document.querySelector(".rightWrapper").classList.add("rightLeftClose");
   document.querySelector(".chatFooterWrapper").classList.add("inputLeftClose");
   $(".toggleLeft").click(openChats);
+  document.querySelector(".toggleLeft").innerText = ">";
 }

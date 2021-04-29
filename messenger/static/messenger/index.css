@@ -46,3 +46,9 @@ a:hover {
   color: var(--light-color);
   border-color: var(--dark-color);
 }
+
+@media only screen and (max-width: 470px) {
+  h1 {
+    font-size: 35px;
+  }
+}

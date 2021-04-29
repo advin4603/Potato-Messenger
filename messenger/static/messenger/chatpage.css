@@ -492,7 +492,25 @@ pre {
   transition: width 0.2s;
 }
 
+.collapseLeft,
+.toggleLeft {
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
+.collapseLeft:hover {
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  border-radius: 0;
+  outline: var(--light-color) solid 2px;
+}
+
+.toggleLeft:hover {
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  border-radius: 0;
+  outline: var(--dark-color) solid 2px;
+}
 
 @media only screen and (max-width: 650px) {
   .collapseLeft {
@@ -509,6 +527,75 @@ pre {
 
   .chatFooterWrapper {
     left: 100%;
+  }
+
+  .modalContent {
+    width: 100%;
+    height: 100%;
+  }
+
+  #messageInput {
+    width: 90%;
+    margin-right: 5px;
+  }
+
+  .chatBrowser {
+    font-size: 12px;
+  }
+
+  .chatBubble {
+    padding: 10px;
+    margin: 7px;
+  }
+
+  .messageInfo {
+    margin: 0 7px 16px 7px;
+  }
+
+  .rightChat {
+    margin-left: auto;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .chatBubble {
+    width: 75%;
+  }
+
+  .chatBrowserWrapper {
+    padding: 10px 10px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .chatFooter {
+    width: 100%;
+  }
+
+  .messageSend {
+    font-size: 12px;
+  }
+
+  .info {
+    height: 17px;
+    width: 17px;
+  }
+
+}
+
+@media only screen and (max-width: 350px) {
+  .datetime {
+    margin: 0 10px;
+  }
+
+  .chatBrowserWrapper {
+    padding: 10px 5px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .datetime {
+    margin: 0 5px;
   }
 }
 

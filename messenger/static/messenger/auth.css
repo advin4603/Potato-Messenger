@@ -111,10 +111,16 @@ h1 {
 .errorWrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 h1 {
   font-size: 40px;
+}
+
+.labelWrapper {
+  display: flex;
+  align-items: center;
 }
 
 .content {
@@ -140,6 +146,7 @@ ul {
   margin-bottom: 10px;
   border: solid;
   animation: shake 0.5s;
+  cursor: default;
 }
 
 .errorWrapper ul li:hover {
@@ -248,7 +255,24 @@ ul {
   }
 
   .fieldWrapper {
-    margin: 30px;
+    margin: 20px;
+    margin-top: 20px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  form {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  form {
+    width: 100vw;
+  }
+
+  .fieldWrapper {
+    margin: 10px;
     margin-top: 20px;
   }
 }
