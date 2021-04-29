@@ -20,7 +20,9 @@ class Profile(models.Model):
     )
 
     def __str__(self):
-        return self.user.username
+        if self.user is not None:
+            return self.user.username
+        return str(self.user)
 
 
 @receiver(post_save, sender=User)

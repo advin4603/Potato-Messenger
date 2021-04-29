@@ -39,14 +39,18 @@ function putChatFront(chatName, profilePicUrl) {
     new_chat_name = chat_name.cloneNode(true);
     chat_name.parentNode.removeChild(chat_name);
   } else {
+    console.log(profilePicUrl);
     newImg = document.createElement("img");
     newImg.src = profilePicUrl;
     newImg.classList.add("profilePic");
     new_chat_name = document.createElement("div");
-    new_chat_name.innerText = chatName;
+    new_chat_name.appendChild(newImg);
+    console.log(new_chat_name.innerHTML);
+    let newText = document.createTextNode(chatName);
+    new_chat_name.appendChild(newText);
+    console.log(new_chat_name.innerHTML);
     new_chat_name.id = chatName;
     new_chat_name.classList.add("chat");
-    new_chat_name.appendChild(newImg);
     new_chat_name.onclick = () => fetchChats(chatName);
   }
   insertAfter(document.querySelector(".search"), new_chat_name);

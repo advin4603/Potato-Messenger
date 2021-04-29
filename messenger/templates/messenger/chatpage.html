@@ -36,9 +36,11 @@
 <div class="leftWrapper">
   <div class="left">
     <h1>Chats</h1>
+
     <div class="newChat">Add New Chat</div>
     <div class="search">
       <input type="text" id="searchChat" oninput="searchKnownChats()" placeholder="Search" />
+      <span class="collapseLeft">&lt;</span>
     </div>
     {% for chatname in chats %}
     <div class="chat {% if chatname == chats.0 %}chatFocus{% endif %}" onClick="fetchChats('{{ chatname }}')"
@@ -52,13 +54,19 @@
 
 <div class="rightWrapper">
   <div class="right">
-    <div class="chatNameWrapper">
-      <input type="hidden" id="accountUrl" value="{% url 'messenger:account' %}" />
-      <img src="{{ chats.0.profile.profile_picture.url }}" class="profilePic">
-      <div class="chatName">{{ chats.0 }}</div>
-      &nbsp;&nbsp;
-      <div class="isOnline" id="{% if chats %}{{ online }}{% endif %}"></div>
+    <div class="topWrapper">
+      <div class="toggleLeft">
+        &lt;
+      </div>
+      <div class="chatNameWrapper">
+        <input type="hidden" id="accountUrl" value="{% url 'messenger:account' %}" />
+        <img src="{{ chats.0.profile.profile_picture.url }}" class="profilePic">
+        <div class="chatName">{{ chats.0 }}</div>
+        &nbsp;&nbsp;
+        <div class="isOnline" id="{% if chats %}{{ online }}{% endif %}"></div>
+      </div>
     </div>
+
     <div class="chatBrowserWrapper">
       <div class="chatBrowser">
         {% for message in messages %}

@@ -136,7 +136,7 @@ def get_new_chats(request):
     return JsonResponse(
         {
             "chats": [
-                user.username
+                (user.username, user.profile.profile_picture.url)
                 for user in User.objects.all()
                 .filter(username__startswith=query)
                 .filter(profile__visible=True)

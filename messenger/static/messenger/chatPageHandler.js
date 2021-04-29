@@ -239,15 +239,15 @@ function searchNewChats() {
       chat_list.forEach((chatName) => {
         let newElem = document.createElement("div");
         newElem.classList.add("newChatNameWrapper");
-        newElem.innerHTML = `<div class="newChatName" onclick="addNewChat('${chatName}')">${chatName}</div>`;
+        newElem.innerHTML = `<div class="newChatName" onclick="addNewChat('${chatName[0]}', '${chatName[1]}')"><img src="${chatName[1]}" class="profilePic">${chatName[0]}</div>`;
         chatBrowser.appendChild(newElem);
       });
     },
   });
 }
-function addNewChat(chatName) {
+function addNewChat(chatName, picUrl) {
   document.querySelector(".modal").style.display = "none";
-  putChatFront(chatName);
+  putChatFront(chatName, picUrl);
   fetchChats(chatName);
 }
 function infoButton(id) {
@@ -281,3 +281,19 @@ scrollChatToBottom();
 $(function () {
   $("pre").linkify();
 });
+
+$(".toggleLeft").click(closeChats);
+$('.collapseLeft').click(closeChats);
+function openChats(){
+  document.querySelector(".leftWrapper").classList.remove("leftClose");
+  document.querySelector(".rightWrapper").classList.remove("rightLeftClose");
+  document.querySelector(".chatFooterWrapper").classList.remove("inputLeftClose");
+  $(".toggleLeft").click(closeChats);
+}
+
+function closeChats(){
+  document.querySelector(".leftWrapper").classList.add("leftClose");
+  document.querySelector(".rightWrapper").classList.add("rightLeftClose");
+  document.querySelector(".chatFooterWrapper").classList.add("inputLeftClose");
+  $(".toggleLeft").click(openChats);
+}
