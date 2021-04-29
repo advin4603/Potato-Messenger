@@ -282,20 +282,22 @@ $(function () {
   $("pre").linkify();
 });
 
-$(".toggleLeft").click(closeChats);
-$('.collapseLeft').click(closeChats);
+document.querySelector(".toggleLeft").onclick = closeChats;
+document.querySelector(".collapseLeft").onclick = closeChats;
+
 function openChats(){
+  document.querySelector(".toggleLeft").onclick = closeChats;
   document.querySelector(".leftWrapper").classList.remove("leftClose");
   document.querySelector(".rightWrapper").classList.remove("rightLeftClose");
   document.querySelector(".chatFooterWrapper").classList.remove("inputLeftClose");
   document.querySelector(".toggleLeft").innerText = "<";
-  $(".toggleLeft").click(closeChats);
+  
 }
 
 function closeChats(){
+  document.querySelector(".toggleLeft").onclick = openChats;
   document.querySelector(".leftWrapper").classList.add("leftClose");
   document.querySelector(".rightWrapper").classList.add("rightLeftClose");
   document.querySelector(".chatFooterWrapper").classList.add("inputLeftClose");
-  $(".toggleLeft").click(openChats);
   document.querySelector(".toggleLeft").innerText = ">";
 }

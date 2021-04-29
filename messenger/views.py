@@ -151,13 +151,19 @@ def get_new_chats(request):
 def get_chat_info(request):
     id = request.GET.get("id", None)
     message = Message.objects.get(pk=int(id))
+    read = (
+        message.read
+        if message.receiver.profile.read_receipts
+        and message.sender.profile.read_receipts
+        else False
+    )
     if message.receiver == request.user or message.sender == request.user:
         return JsonResponse(
             {
                 "sent_on": message.time.strftime("%a %#d %b %Y %#I:%M %p"),
-                "read": message.read,
+                "read": read,
                 "read_on": message.read_on.strftime("%a %#d %b %Y %#I:%M %p")
-                if message.read
+                if read
                 else None,
             }
         )
