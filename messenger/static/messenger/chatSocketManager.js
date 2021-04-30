@@ -20,6 +20,7 @@ chatSocket.onmessage = function (e) {
         if (chatIsScrolledBottom()) {
           fetchChat(data.id);
           scrollChatSmoothToBottom();
+          checkRead();
         } else {
           fetchChat(data.id);
           incrementUnread(currentChatName);
