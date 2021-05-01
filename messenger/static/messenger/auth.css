@@ -222,6 +222,35 @@ ul {
   display: none;
 }
 
+.description {
+  text-align: center;
+  margin: 30px;
+}
+
+.info {
+  color: var(--dark-color);
+}
+
+.info p {
+  text-align: center;
+}
+
+.info a {
+  color: var(--dark-color);
+  text-decoration: underline;
+}
+
+.bottomText {
+  color: var(--light-color);
+  text-align: center;
+  margin: 40px 0 0 0;
+}
+
+.bottomText a {
+  color: var(--light-color);
+}
+
+
 @media only screen and (max-width: 870px) {
   form {
     width: 75vw;
@@ -229,7 +258,9 @@ ul {
 }
 
 @media only screen and (max-width: 600px) {
-  form {
+
+  form,
+  .bottomText {
     font-size: 20px;
   }
 }
@@ -261,7 +292,9 @@ ul {
 }
 
 @media only screen and (max-width: 350px) {
-  form {
+
+  form,
+  .bottomText {
     font-size: 16px;
   }
 }
