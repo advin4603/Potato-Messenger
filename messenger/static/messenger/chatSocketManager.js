@@ -1,15 +1,9 @@
 const chatSocket = new WebSocket("ws://" + window.location.host + "/ws/chat/");
-function insertAfter(referenceNode, newNode) {
-  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
-
 chatSocket.onmessage = function (e) {
   const data = JSON.parse(e.data);
   let currentChatName = document.querySelector(".chatName").innerText;
   let inputText = document.getElementById("searchChat").value;
-  if (!data.chat_name.startsWith(inputText)) {
-    return;
-  }
+  if (!data.chat_name.startsWith(inputText)) {return;}
   $.ajax({
     url: "/ajax/getprofilepicurl/",
     data: {"username":data.chat_name},
@@ -28,10 +22,8 @@ chatSocket.onmessage = function (e) {
       } else {
         incrementUnread(data.chat_name);
       }
-      
     }
   });
-  
 };
 function putChatFront(chatName, profilePicUrl) {
   let chat_name = document.getElementById(chatName);
@@ -57,11 +49,7 @@ function incrementUnread(chatName) {
   let chat = document.getElementById(chatName);
   if (chat.children.length > 1) {
     let unreadMessages = chat.children[1];
-    unreadMessages.innerText =
-      unreadMessages.innerText == "99+" ||
-      Number(unreadMessages.innerText) + 1 > 99
-        ? "99+"
-        : Number(unreadMessages.innerText) + 1;
+    unreadMessages.innerText = (unreadMessages.innerText == "99+" || Number(unreadMessages.innerText) + 1 > 99)? "99+" : Number(unreadMessages.innerText) + 1;
   } else {
     let newUnreadMessage = document.createElement("span");
     newUnreadMessage.innerText = "1";
@@ -70,12 +58,6 @@ function incrementUnread(chatName) {
 }
 function removeIncrement(chatName) {
   let chat = document.getElementById(chatName);
-  if (chat.children.length > 1) {
-    let unreadMessages = chat.children[1];
-    unreadMessages.remove();
-  }
+  if (chat.children.length > 1) {chat.children[1].remove();}
 }
-
-chatSocket.onclose = function (e) {
-  console.error("Chat socket closed unexpectedly");
-};
+chatSocket.onclose = function (e) {console.error("Chat socket closed unexpectedly");};

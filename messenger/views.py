@@ -15,20 +15,6 @@ def index(request):
     return render(request, "messenger/index.html")
 
 
-@login_required
-def empty(request):
-    if request.method == "POST":
-        form = PhotoForm(request.POST, request.FILES)
-        if form.is_valid():
-            image = form.save(commit=False).profile_picture
-            request.user.profile.profile_picture = image
-            request.user.profile.save(update_fields=["profile_picture"])
-            return redirect("messenger:index")
-    else:
-        form = PhotoForm()
-    return render(request, "messenger/empty.html", {"form": form})
-
-
 def signup(request):
     if request.method == "POST":
         form_1 = SignupForm(request.POST)

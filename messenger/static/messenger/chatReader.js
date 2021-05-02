@@ -1,14 +1,10 @@
 $.fn.isInViewport = function () {
   var elementTop = $(this).offset().top;
   var elementBottom = elementTop + $(this).outerHeight();
-
   var viewportTop = $(document.querySelector(".chatBrowser")).offset().top;
-  var viewportBottom =
-    viewportTop + $(document.querySelector(".chatBrowser")).height();
-
+  var viewportBottom = viewportTop + $(document.querySelector(".chatBrowser")).height();
   return elementBottom > viewportTop && elementTop < viewportBottom;
 };
-
 function checkRead() {
   $(".False").each(function () {
     let elem = $(this);
@@ -16,10 +12,7 @@ function checkRead() {
       $.ajax({
         url: "/ajax/setread/",
         type: "POST",
-        data: {
-          id: this.id,
-          csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
-        },
+        data: {id: this.id,csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()},
         dataType: "json",
         success: function (data) {
           if (data.success) {
@@ -31,7 +24,6 @@ function checkRead() {
     }
   });
 }
-checkRead();
 var ScrollDebounce = true;
 $(".chatBrowser").on("resize scroll", function () {
   if (ScrollDebounce) {
@@ -42,3 +34,4 @@ $(".chatBrowser").on("resize scroll", function () {
     }, 100);
   }
 });
+$(function(){checkRead();});

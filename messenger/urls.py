@@ -25,5 +25,4 @@ urlpatterns = [
     path(
         "ajax/getprofilepicurl/", views.get_profile_pic_url, name="get_profile_pic_url"
     ),
-    path("empty/", views.empty, name="empty"),
 ]
