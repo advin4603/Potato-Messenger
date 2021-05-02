@@ -108,12 +108,11 @@ function fetchChat(id) {
     success: function (data) {putChat([data.text, data.time, data.sender, data.receiver, data.read, id]);},
   });
 }
-
 document.querySelector(".messageSend").onclick = function () {
   let text = document.querySelector("#messageInput").value;
   document.querySelector("#messageInput").value = "";
   let receiver = document.querySelector(".chatName").innerText;
-  if (text){
+  if (text&&receiver){
     $.ajax({
       url: "/ajax/sendmessage/",
       type: "POST",
