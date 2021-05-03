@@ -62,6 +62,14 @@ a {
 
 .logo a {
   font-size: 3vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo a img {
+  width: 40px;
+  margin-right: 5px;
 }
 
 main {
@@ -149,5 +157,12 @@ main {
     background-color: var(--dark-color);
     color: var(--light-color);
     border-color: var(--dark-color);
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .logo a img {
+    width: 30px;
+    margin-right: 5px;
   }
 }
