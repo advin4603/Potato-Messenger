@@ -5,6 +5,9 @@ from django.dispatch import receiver
 from django.conf import settings
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+from celery.decorators import task
+from webpush import send_user_notification
+from django.templatetags.static import static
 
 
 class Profile(models.Model):
@@ -52,6 +55,14 @@ class Message(models.Model):
     read_on = models.DateTimeField(null=True, default=None, blank=True)
 
 
+@task(name="send_push")
+def send_push_task(payload, receiver):
+
+    send_user_notification(
+        user=User.objects.get(username=receiver), payload=payload, ttl=1000
+    )
+
+
 @receiver(post_save, sender=Message)
 def notify_receiver(sender, instance: Message, created, **kwargs):
     if created:
@@ -65,3 +76,17 @@ def notify_receiver(sender, instance: Message, created, **kwargs):
                     "type": "chat_message",
                 },
             )
+        unread_messages_num = len(
+            Message.objects.all().filter(
+                receiver=instance.receiver, sender=instance.sender, read=False
+            )
+        )
+        payload = {
+            "head": "New Message" if unread_messages_num == 1 else "New Messages",
+            "body": f"You have {unread_messages_num} unread message{'s' if unread_messages_num > 1 else ''} from {instance.sender.username}.",
+            "tag": instance.sender.username,
+            "icon": "http://192.168.1.9:8000"
+            + static("messenger/images/iconSquare.png"),
+            "renotify": True,
+        }
+        send_push_task.delay(payload, instance.receiver.username)

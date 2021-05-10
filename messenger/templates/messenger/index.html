@@ -1,8 +1,11 @@
 {% load static %}
+{% load webpush_notifications %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <meta name="service-worker-js" content="/webpush/service-worker.js">
+    <meta name="django-webpush-vapid-key" content="{{ vapid_key }}">
     <link rel="shortcut icon" type="image/png" href="{% static 'messenger/images/iconSquare.png' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'messenger/colors.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'messenger/index.css' %}">
@@ -31,7 +34,10 @@
         <img src="{% static 'messenger/images/logo.svg' %}" alt="logo">
         Potato Messenger
     </h1>
-
+    <div class="webpushButtonWrapper">
+        {% webpush_button %}
+    </div>
+    <script src="{% static 'messenger/webPushEnabler.js' %}"></script>
 </body>
 
 </html>

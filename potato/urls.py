@@ -23,11 +23,13 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("messenger.urls")),
+    path("webpush/", include("webpush.urls")),
     path(
         "resetpassword/",
         auth_views.PasswordResetView.as_view(
             template_name="messenger/reset_password.html",
             html_email_template_name="messenger/password_reset_email.html",
+            subject_template_name="messenger/password_reset_subject.txt",
         ),
         name="reset_password",
     ),

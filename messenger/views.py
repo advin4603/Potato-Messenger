@@ -2,17 +2,22 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignupForm, ProfileForm, PhotoForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from collections import OrderedDict
 from django.contrib.auth.models import User
+from django.conf import settings
 import datetime
 from .models import Message
 
 
 def index(request):
-    return render(request, "messenger/index.html")
+    return render(
+        request,
+        "messenger/index.html",
+        {"vapid_key": settings.WEBPUSH_SETTINGS["VAPID_PUBLIC_KEY"]},
+    )
 
 
 def signup(request):

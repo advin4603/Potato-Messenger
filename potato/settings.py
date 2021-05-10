@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "channels",
+    "webpush",
+    "djcelery_email",
     "messenger.apps.MessengerConfig",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -135,9 +137,29 @@ LOGIN_URL = "messenger:login"
 DEFAULT_STATUS = "Hi, I am using Potato Messenger"
 PROFILE_CROP_SIZE = (200, 200)
 
-CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": "BFs8yktBt4B-6UWT7odPiC8xNDpbX487NMdJX79erKXBXGxfHjNwGzvK6FLO1VGlUGYFs4nhr_q49i68Gn1BVEo",
+    "VAPID_PRIVATE_KEY": "kIgm2K45yf5lKM3mMz-vVPv1j4pqGV5F3X1X3Zm4Gno",
+    "VAPID_ADMIN_EMAIL": "m1necr4f7.1234@gmail.com",
+}
+
+# celery
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+
+EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

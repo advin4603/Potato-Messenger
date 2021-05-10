@@ -58,3 +58,7 @@ a:hover {
     font-size: 35px;
   }
 }
+
+.webpushButtonWrapper {
+  display: none;
+}

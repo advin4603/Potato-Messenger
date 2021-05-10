@@ -202,6 +202,12 @@ function closeChats(){
   document.querySelector(".chatFooterWrapper").classList.add("inputLeftClose");
   document.querySelector(".toggleLeft").innerText = ">";
 }
+document.querySelector("#messageInput").addEventListener("keyup", function(event) {
+  if (event.keyCode === 13 && document.querySelector("#messageInput")==document.activeElement) {
+    event.preventDefault();
+    $(".messageSend").click();
+  }
+});
 $(function () {
   $("pre").linkify();
   scrollChatToBottom();
