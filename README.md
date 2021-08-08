@@ -11,7 +11,7 @@ Make sure you have installed all of the following prerequisites on your developm
 ### Running a Local Development Server
 Potato Messenger requires a .env file with necessary settings.
 Fill these settings.
-Contents of .env
+Contents of .env :
 ```
 SECRET_KEY=""
 DATABASE_NAME=""
