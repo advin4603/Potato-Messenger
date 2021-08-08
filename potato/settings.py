@@ -12,16 +12,18 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import dotenv_values
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+config = dotenv_values(os.path.join(BASE_DIR, ".env"))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "8y&u6_ag0t+49+9k5&36!v9m3+#b#h6%lnzflax51bk3=z@cno"
+SECRET_KEY = config["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -83,11 +85,11 @@ ASGI_APPLICATION = "potato.asgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "potato-messenger",
-        "USER": "django-potato",
-        "PASSWORD": "password",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
+        "NAME": config["DATABASE_NAME"],
+        "USER": config["DATABASE_USER"],
+        "PASSWORD": config["DATABASE_PASSWORD"],
+        "HOST": config["DATABASE_HOST"],
+        "PORT": config["DATABASE_PORT"],
     }
 }
 
@@ -129,6 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 LOGIN_URL = "messenger:login"
@@ -141,20 +144,20 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [(config["REDIS_IP"], int(config["REDIS_PORT"]))],
         },
     },
 }
 
 WEBPUSH_SETTINGS = {
-    "VAPID_PUBLIC_KEY": "BFs8yktBt4B-6UWT7odPiC8xNDpbX487NMdJX79erKXBXGxfHjNwGzvK6FLO1VGlUGYFs4nhr_q49i68Gn1BVEo",
-    "VAPID_PRIVATE_KEY": "kIgm2K45yf5lKM3mMz-vVPv1j4pqGV5F3X1X3Zm4Gno",
-    "VAPID_ADMIN_EMAIL": "m1necr4f7.1234@gmail.com",
+    "VAPID_PUBLIC_KEY": config["WEBPUSH_VAPID_PUBLIC_KEY"],
+    "VAPID_PRIVATE_KEY": config["WEBPUSH_VAPID_PRIVATE_KEY"],
+    "VAPID_ADMIN_EMAIL": config["WEBPUSH_VAPID_ADMIN_EMAIL"],
 }
 
 # celery
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_BROKER_URL = config["CELERY_BROKER_URL"]
+CELERY_RESULT_BACKEND = config["CELERY_RESULT_BACKEND"]
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
@@ -163,5 +166,5 @@ EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "<email>"
-EMAIL_HOST_PASSWORD = "<password>"
+EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]

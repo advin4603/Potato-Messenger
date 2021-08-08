@@ -98,7 +98,6 @@ celerybeat-schedule
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -126,3 +125,12 @@ dmypy.json
 
 # Profile Pictures
 /media/profile_pictures/
+
+# Environment Variables
+.env
+
+# MySQL Database Info
+/db 
+
+# Collected static files
+/static
