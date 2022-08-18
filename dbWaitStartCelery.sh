@@ -6,7 +6,7 @@ M_LOOPS="100"
 #wait for mysql
 i=0
 # http://stackoverflow.com/a/19956266/4848859
-while ! curl $DATABASE_HOST:$DATABASE_PORT >/dev/null 2>&1 < /dev/null; do
+while ! curl $DATABASE_HOST:$DATABASE_PORT --http0.9>/dev/null 2>&1 < /dev/null; do
   i=`expr $i + 1`
 
   if [ $i -ge $M_LOOPS ]; then
