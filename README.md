@@ -1,5 +1,5 @@
 # Potato-Messenger
- Chat Application built with Django.
+ Chat Application built with Django, MySQL,HTML, CSS, Vanilla JS, and websockets.
  
  
 ## Getting Started
@@ -32,6 +32,6 @@ EMAIL_HOST_PASSWORD=""
 ```bash
 $ git clone https://github.com/advin4603/Potato-Messenger
 $ cd Potato-Messenger
-$ docker-compose up
+$ docker compose up
 ```
 
